@@ -9,6 +9,7 @@ export const getAuthToken = () => {
 
 export const setAuthToken = (token) => {
     window.localStorage.setItem("auth_token", token);
+    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
 export const request = (method, url, data) => {

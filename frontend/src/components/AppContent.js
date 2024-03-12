@@ -1,15 +1,16 @@
 import * as React from "react";
+import axios from "axios";
 import WelcomeContent from "./WelcomeContent.js";
 import AuthContent from "./AuthContent.js";
 import LoginForm from "./LoginForm.js";
 import {request, setAuthToken} from "../axios_helper.js";
-import Buttons from "./Buttons.js";
+import './styles.css';
 export default class AppContent extends React.Component{
 
     constructor(props) {
         super(props);
         this.state = {
-            componentToShow: "welcome"
+            componentToShow: "login"
         };
     };
 
@@ -19,6 +20,8 @@ export default class AppContent extends React.Component{
 
     logout = () => {
         this.setState({componentToShow: "welcome"});
+        window.localStorage.removeItem("auth_token");
+        delete axios.defaults.headers.common['Authorization'];
 
     };
 
@@ -37,6 +40,8 @@ export default class AppContent extends React.Component{
 
     onRegister = (e, firstName, lastName, username, password) => {
         e.preventDefault();
+        window.localStorage.removeItem("auth_token");
+        delete axios.defaults.headers.common['Authorization'];
         request("POST",
             "/register",
             {
@@ -55,12 +60,17 @@ export default class AppContent extends React.Component{
 
     render() {
         return(
-            <div>
-                <Buttons login={this.login} logout={this.logout}/>
+            <div className="container">
+                <div className="halfWidthContainer">
 
-                {this.state.componentToShow === "welcome" && <WelcomeContent/>}
-                {this.state.componentToShow === "messages" && <AuthContent/>}
-                {this.state.componentToShow === "login" && <LoginForm onLogin={this.onLogin} onRegister={this.onRegister}/>}
+                    <WelcomeContent/>
+                    {this.state.componentToShow === "messages" && <AuthContent/>}
+                    <LoginForm onLogin={this.onLogin} onRegister={this.onRegister}/>
+
+
+                </div>
+                <div className="halfWidthContainer bg-danger-subtle">
+                </div>
             </div>
         );
     };
