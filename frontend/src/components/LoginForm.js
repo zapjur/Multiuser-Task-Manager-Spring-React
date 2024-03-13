@@ -22,11 +22,13 @@ export default class LoginForm extends React.Component {
     };
 
     onSubmitLogin = (e) => {
-        this.state.onLogin(e, this.state.login, this.state.password);
+        e.preventDefault();
+        this.props.onLogin(e, this.state.login, this.state.password);
     };
 
     onSubmitRegister = (e) => {
-        this.state.onRegister(
+        e.preventDefault();
+        this.props.onRegister(
             e,
             this.state.firstName,
             this.state.lastName,

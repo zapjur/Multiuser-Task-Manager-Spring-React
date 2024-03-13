@@ -18,6 +18,7 @@ function LoginPage() {
                 navigate("/mainapp");
                 setAuthToken(response.data.token);
         }).catch((error) => {
+            console.error(error)
             navigate("/")
         });
     };
@@ -38,6 +39,7 @@ function LoginPage() {
             navigate("/mainapp")
             setAuthToken(response.data.token);
         }).catch((error) => {
+            console.error(error)
             navigate("/")
         });
     };
