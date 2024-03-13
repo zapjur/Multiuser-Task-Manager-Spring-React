@@ -1,9 +1,8 @@
-import * as React from "react";
+import React from "react";
 import classNames from 'classnames';
 import './styles.css';
 
-export default class LoginForm extends React.Component{
-
+export default class LoginForm extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -12,11 +11,8 @@ export default class LoginForm extends React.Component{
             lastName: "",
             login: "",
             password: "",
-            onLogin: props.onLogin,
-            onRegister: props.onRegister
-
+            welcomeText: "Welcome Back",
         };
-
     }
 
     onChangeHandler = (event) => {
@@ -40,17 +36,31 @@ export default class LoginForm extends React.Component{
     };
 
     render() {
-        return(
-            <div className="row justify-content-center">
-                <div>
+        return (
+            <div className="containerColumn">
+                <div className="containerWelcome">
+                    <h1>{this.state.welcomeText}</h1>
+                    <p>Please enter your details</p>
+                </div>
+                <div className="col-md-6">
                     <ul className="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
                         <li className="nav-item" role="presentation">
-                            <button className={classNames("nav-link", this.state.active === "login" ? "active" : "")}
-                            id="tab-login" onClick={() => this.setState({active: "login"})}>Sign in</button>
+                            <button
+                                className={classNames("nav-link", { active: this.state.active === "login", inactive: this.state.active !== "login" })}
+                                id="tab-login"
+                                onClick={() => this.setState({ active: "login", welcomeText: "Welcome Back" })}
+                            >
+                                Sign in
+                            </button>
                         </li>
                         <li className="nav-item" role="presentation">
-                            <button className={classNames("nav-link", this.state.active === "register" ? "active" : "")}
-                                    id="tab-register" onClick={() => this.setState({active: "register"})}>Sign up</button>
+                            <button
+                                className={classNames("nav-link", { active: this.state.active === "register", inactive: this.state.active !== "register" })}
+                                id="tab-register"
+                                onClick={() => this.setState({ active: "register", welcomeText: "Welcome" })}
+                            >
+                                Sign up
+                            </button>
                         </li>
                     </ul>
                 </div>

@@ -1,5 +1,5 @@
 import './App.css';
-import AppContent from "./AppContent.js";
+import LoginPage from "../pages/LoginPage.js";
 
 function App(){
 
@@ -8,7 +8,7 @@ function App(){
             <div className="container-fluid">
                 <div className="row">
                     <div className="col">
-                        <AppContent/>
+                        <LoginPage/>
                     </div>
                 </div>
             </div>
