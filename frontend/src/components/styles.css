@@ -18,12 +18,12 @@
     background-color: whitesmoke;
     box-shadow: 0 0 100px 50px rgba(0, 0, 0, 0.2);
     border-radius: 100px;
-    padding-bottom: 5%;
+    padding-bottom: 2%;
     max-width: 40%;
 }
 
 .containerWelcome{
-    padding-top: 10%;
+    padding-top: 5%;
     padding-bottom: 5%;
     text-align: center;
 }
