@@ -1,9 +1,9 @@
 import * as React from "react";
 import axios from "axios";
-import Logo from "../components/Logo.js";
-import LoginForm from "../components/LoginForm.js";
+import Logo from "../loginPageComponents/Logo.js";
+import LoginForm from "../loginPageComponents/LoginForm.js";
 import {request, setAuthToken} from "../axios_helper.js";
-import '../components/styles.css';
+import '../loginPageComponents/loginPageStyles.css';
 import {useNavigate} from "react-router-dom";
 function LoginPage() {
 

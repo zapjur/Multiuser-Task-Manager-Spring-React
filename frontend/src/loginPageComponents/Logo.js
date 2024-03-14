@@ -1,8 +1,9 @@
 import * as React from "react";
 import logo from '../graphics/logo.png';
-import './loginPagesStyles.css';
+import './loginPageStyles.css';
 
 function Logo() {
+
     return(
             <div className="containerColumn">
                 <div className="logoContainer">
