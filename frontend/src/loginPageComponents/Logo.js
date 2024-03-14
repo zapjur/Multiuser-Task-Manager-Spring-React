@@ -1,6 +1,6 @@
 import * as React from "react";
 import logo from '../graphics/logo.png';
-import './styles.css';
+import './loginPagesStyles.css';
 
 function Logo() {
     return(
