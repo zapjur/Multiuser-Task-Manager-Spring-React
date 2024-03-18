@@ -4,6 +4,7 @@ import logo from '../graphics/logo.png';
 import calendarIcon from '../graphics/calendar.png';
 import logoutIcon from '../graphics/logout.png'
 import mainpageIcon from '../graphics/mainpage.png'
+import settingsIcon from '../graphics/settings.png'
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 
@@ -30,6 +31,9 @@ function SideBar() {
                 </div>
                 <div className="containerHoverBackground">
                     <img src={calendarIcon} alt="Calendar"/>
+                </div>
+                <div className="containerHoverBackground">
+                    <img src={settingsIcon} alt="Calendar"/>
                 </div>
                 <div className="containerHoverBackground logoutButton">
                     <img src={logoutIcon} alt="Logout" onClick={logout}/>

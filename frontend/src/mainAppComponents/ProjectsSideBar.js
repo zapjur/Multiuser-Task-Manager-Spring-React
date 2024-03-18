@@ -16,9 +16,9 @@ function ProjectsSideBar() {
                 <h6 className="sectionTitle">All projects</h6>
                 <div className="horizontalLine"></div>
 
-                <div className="newProjectContainer">
-                    <NewProjectButton/>
-                </div>
+            </div>
+            <div className="newProjectContainer">
+                <NewProjectButton/>
             </div>
         </div>
     );
