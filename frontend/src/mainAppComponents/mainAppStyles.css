@@ -79,6 +79,11 @@
     bottom: 5vh;
 }
 
+.mainAppContainer {
+    display: flex;
+    flex-direction: row;
+}
+
 .newProjectButton {
     background-color: #bde0fe;
     color: #0073e6;
@@ -98,7 +103,15 @@
 }
 
 .newProjectPlusSign {
+    padding-left: 5px;
+}
 
+.projectName {
+    padding-left: 50px;
+}
+
+.projectName h2 {
+    font-weight: bold;
 }
 
 .projectsPanel {
@@ -151,7 +164,36 @@
     opacity: 1;
 }
 
+.sectionAllProjects {
+    padding-bottom: 30px;
+}
+
+.sectionFavorite p {
+    padding-left: 5%;
+}
+
+.sectionFavorite {
+    padding-bottom: 30px;
+}
+
+.sectionFavorite p {
+    padding-left: 5%;
+}
+
 .sectionTitle {
     font-weight: bold;
  }
+
+.topPanel {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding-top: 2vh;
+}
+
+.topPanelOptions {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
 
