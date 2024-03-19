@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import SideBar from "../mainAppComponents/SideBar.js";
 import ProjectsSideBar from "../mainAppComponents/ProjectsSideBar.js";
 import TopPanel from "../mainAppComponents/TopPanel.js";
+import TaskBord from "../mainAppComponents/TaskBord.js";
 
 function MainAppPage() {
     const [data, setData] = useState([]);
@@ -19,7 +20,7 @@ function MainAppPage() {
     }, []);
 
     return (
-        <div className="container-fluid mainAppContainer">
+        <div className="mainAppContainer">
             <div className="col-md-2 sidePanel">
                 <div className="col-md-3">
                     <SideBar/>
@@ -28,8 +29,9 @@ function MainAppPage() {
                     <ProjectsSideBar/>
                 </div>
             </div>
-            <div>
+            <div className="col-md-10 mainPanel">
                 <TopPanel/>
+                <TaskBord/>
             </div>
         </div>
     );

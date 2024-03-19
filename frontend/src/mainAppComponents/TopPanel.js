@@ -13,11 +13,11 @@ function TopPanel() {
 
     return(
       <div className="topPanel">
-          <div className="projectName">
+          <div className="projectName col-md-6">
               <h2>Projekt na JPWP</h2>
               <p>Taka jira lub trello ale lepsze</p>
           </div>
-          <div className="topPanelOptions">
+          <div className="topPanelOptions col-md-6">
               <img
                   src={isStarFull ? starFullIcon : starEmptyIcon}
                   alt="StarIcon"
@@ -25,6 +25,10 @@ function TopPanel() {
                   height={40}
                   onClick={toggleStar}
               />
+              <button className="addMemberButton">
+                  Add member
+                  <span className="newProjectPlusSign">+</span>
+              </button>
           </div>
       </div>
     );

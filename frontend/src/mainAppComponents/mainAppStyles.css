@@ -1,3 +1,13 @@
+.addMemberButton {
+    background-color: #0073e6;
+    color: whitesmoke;
+    font-weight: bold;
+    border-radius: 40px;
+    border: none;
+    width: 150px;
+    height: 40px;
+}
+
 .borderRightSide {
     border-right: 2px solid whitesmoke;
     height: 100vh;
@@ -76,12 +86,18 @@
 
 .logoutButton {
     position: absolute;
-    bottom: 5vh;
+    bottom: 1vh;
 }
 
 .mainAppContainer {
     display: flex;
     flex-direction: row;
+}
+
+.mainPanel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .newProjectButton {
@@ -96,7 +112,7 @@
 
 .newProjectContainer {
     position: absolute;
-    bottom: 5vh;
+    bottom: 2vh;
     width: 100%;
     padding-right: 5%;
     padding-left: 5%;
@@ -184,6 +200,31 @@
     font-weight: bold;
  }
 
+.taskBoardContainer {
+    display: flex;
+    flex-direction: row;
+    gap: 32px;
+    height: 100%;
+    padding-left: 2vh;
+    padding-right: 2vh;
+    padding-top: 2vh;
+}
+
+.taskPanel {
+    background-color: #e9ecef;
+    border-radius: 50px;
+    width: 25%;
+}
+
+.taskPanel h5 {
+    font-weight: bold;
+}
+
+.taskSectionContainer {
+    background-color: #f8f9fa;
+    height: 100%;
+}
+
 .topPanel {
     display: flex;
     flex-direction: row;
@@ -195,5 +236,7 @@
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    padding-right: 2vw;
+    gap: 50px;
 }
 
