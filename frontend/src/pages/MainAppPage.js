@@ -11,6 +11,7 @@ import TaskBord from "../mainAppComponents/TaskBord.js";
 function MainAppPage() {
     const [data, setData] = useState([]);
     const navigate = useNavigate();
+    const [newProcjetWindow, setNewProjectWindow] = useState(false);
 
     useEffect(() => {
         request("GET", "/messages", {})

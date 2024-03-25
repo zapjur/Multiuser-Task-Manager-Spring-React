@@ -11,6 +11,7 @@ function LoginPage() {
 
     const onLogin = (e, username, password) => {
         e.preventDefault();
+        window.localStorage.removeItem("auth_token");
         request("POST",
             "/login",
             {login: username, password: password}

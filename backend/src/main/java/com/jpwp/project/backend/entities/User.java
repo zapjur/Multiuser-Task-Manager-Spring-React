@@ -1,10 +1,10 @@
 package com.jpwp.project.backend.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,6 +12,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Table(name = "app_user")
 @Entity
+@Getter
+@Setter
 public class User {
 
     @Id
@@ -29,5 +31,8 @@ public class User {
 
     @Column(nullable = false)
     private String password;
+
+    @ManyToMany(mappedBy = "users")
+    private List<Project> projects = new ArrayList<>();
 
 }
