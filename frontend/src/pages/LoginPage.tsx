@@ -13,8 +13,8 @@ function LoginPage() {
         e.preventDefault();
         try {
             window.localStorage.removeItem("auth_token");
-            const response = await request("POST", "/login", { login: username, password: password });
-            navigate("/mainapp");
+            const response = await request("post", "/login", { login: username, password: password });
+            navigate("/app");
             setAuthToken(response.data.token);
         } catch (error) {
             console.error(error);
@@ -27,7 +27,7 @@ function LoginPage() {
         try {
             window.localStorage.removeItem("auth_token");
             delete axios.defaults.headers.common['Authorization'];
-            const response = await request("POST", "/register", {
+            const response = await request("post", "/register", {
                 firstName: firstName,
                 lastName: lastName,
                 login: username,

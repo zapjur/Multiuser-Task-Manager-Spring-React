@@ -2,6 +2,8 @@ import React from "react";
 import './mainAppStyles.css'
 import starEmptyIcon from '../graphics/starEmpty.png'
 import starFullIcon from'../graphics/starFull.png'
+import {Add} from "@mui/icons-material";
+import AddMemberButton from "../buttons/AddMemberButton";
 
 function TopPanel() {
 
@@ -25,10 +27,9 @@ function TopPanel() {
                   height={40}
                   onClick={toggleStar}
               />
-              <button className="addMemberButton">
-                  Add member
-                  <span className="newProjectPlusSign">+</span>
-              </button>
+              <div className="addMemberButtonContainer">
+                <AddMemberButton/>
+              </div>
           </div>
       </div>
     );

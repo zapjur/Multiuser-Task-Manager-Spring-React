@@ -1,8 +1,9 @@
 import SearchBar from "./SearchBar";
 import './mainAppStyles.css';
-import NewProjectButton from "./NewProjectButton";
+import NewProjectButton from "../buttons/NewProjectButton";
 
 function ProjectsSideBar() {
+
 
     return (
         <div className="projectsPanel borderRightSide">

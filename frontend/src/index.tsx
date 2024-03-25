@@ -5,8 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import LoginPage from "./pages/LoginPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import MainAppPage from "./pages/MainAppPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import App from "./pages/App";
 
 const router = createBrowserRouter([
     {
@@ -15,8 +15,8 @@ const router = createBrowserRouter([
         errorElement: <NotFoundPage/>,
     },
     {
-        path: '/mainapp',
-        element: <MainAppPage/>,
+        path: '/app',
+        element: <App/>,
         errorElement: <NotFoundPage/>,
     }
 ]);
