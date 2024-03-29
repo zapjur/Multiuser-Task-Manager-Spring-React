@@ -1,12 +1,17 @@
 import Button from '@mui/material/Button';
 import { useFormContext } from '../context/FormContext';
 
-function CreateProjectButton() {
+interface CreateProjectButtonProps {
+    type?: "button" | "submit" | "reset";
+}
+
+function CreateProjectButton({type = 'button'} : CreateProjectButtonProps) {
 
     const { toggleFormVisibility } = useFormContext();
 
     return(
         <Button
+            type={type}
             sx={{
                 backgroundColor: '#0073e6',
                 color: 'whitesmoke',
@@ -21,6 +26,7 @@ function CreateProjectButton() {
                     backgroundColor: '#3385ff',
                 },
             }}
+            //onClick={toggleFormVisibility}
         >
             Create project
         </Button>

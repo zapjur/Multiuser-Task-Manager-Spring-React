@@ -1,9 +1,18 @@
 import SearchBar from "./SearchBar";
 import './mainAppStyles.css';
 import NewProjectButton from "../buttons/NewProjectButton";
+import axios from 'axios';
+import {useState, useEffect} from "react";
+import { getAuthToken } from '../axios_helper';
+import ProjectList from "./ProjectList";
+
+interface Project {
+    id: number;
+    name: string;
+    description: string;
+}
 
 function ProjectsSideBar() {
-
 
     return (
         <div className="projectsPanel borderRightSide">
@@ -14,19 +23,11 @@ function ProjectsSideBar() {
                 <div className="sectionFavorite">
                     <h6 className="sectionTitle">Favorites</h6>
                     <div className="horizontalLine"></div>
-                    <p>Ej mordo flanki</p>
-                    <p>Prezentacja na WWW</p>
-                    <p>Projekt JPWP</p>
                 </div>
                 <div className="sectionAllProjects">
                     <h6 className="sectionTitle">All projects</h6>
                     <div className="horizontalLine"></div>
-                    <p>Ej mordo flanki</p>
-                    <p>Prezentacja na WWW</p>
-                    <p>Projekt JPWP</p>
-                    <p>Egzamin z angielskiego</p>
-                    <p>Losowy projekt</p>
-                    <p>Hackathon</p>
+                    <ProjectList/>
                 </div>
 
             </div>

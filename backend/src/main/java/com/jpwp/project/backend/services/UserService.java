@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import java.nio.CharBuffer;
 import java.util.Optional;
@@ -57,4 +59,16 @@ public class UserService {
 
         return userMapper.toUserDto(user);
     }
+
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        return userRepository.findByLogin(currentUserName)
+                .orElseThrow(() -> new AppException("Użytkownik nie został znaleziony.", HttpStatus.NOT_FOUND));
+    }
+
+    public void saveUser(User user) {
+        userRepository.save(user);
+    }
+
 }

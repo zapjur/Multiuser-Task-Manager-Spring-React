@@ -10,7 +10,7 @@ function TaskBord() {
       <div className="taskSectionContainer">
           <div className="taskBoardContainer">
               {statuses.map(status => (
-                  <TaskPanel status={status}/>
+                  <TaskPanel key={status} status={status}/>
               ))}
           </div>
       </div>

@@ -18,10 +18,14 @@ public class Project {
     private Long id;
 
     @NotBlank(message = "Description is required")
-    private String name;
+    private String title;
 
     @NotBlank(message = "Description is required")
     private String description;
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private User owner;
 
     @ManyToMany
     @JoinTable(

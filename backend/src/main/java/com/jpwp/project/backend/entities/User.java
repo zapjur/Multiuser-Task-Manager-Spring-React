@@ -35,4 +35,10 @@ public class User {
     @ManyToMany(mappedBy = "users")
     private List<Project> projects = new ArrayList<>();
 
+    public void addProject(Project project) {
+        this.projects.add(project);
+        project.getUsers().add(this);
+    }
+
+
 }
