@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.jpwp.project.backend.services.UserService;
+import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/projects")
@@ -51,6 +52,18 @@ public class ProjectController {
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{projectId}")
+    public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
+        User currentUser = userService.getCurrentUser();
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
 
+        if(!project.getOwner().equals(currentUser)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized to delete this project");
+        }
+
+        projectRepository.deleteById(projectId);
+        return ResponseEntity.ok().build();
+    }
 
 }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { request } from '../axios_helper';
-import './mainAppStyles.css'
+import './mainAppStyles.css';
+import { useSelectedProject } from "../context/SelectedProjectContext";
 
 interface Project {
     id: number;
@@ -9,7 +10,8 @@ interface Project {
 }
 
 const ProjectList = () => {
-    const [projects, setProjects] = useState<Project[]>([]);
+
+    const { projects, selectProject, setProjects } = useSelectedProject();
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -26,13 +28,18 @@ const ProjectList = () => {
         };
 
         fetchProjects();
-    }, []);
+    }, [setProjects]);
 
     return (
-        <div>
+        <div className="projectList">
             <ul>
                 {projects.map(project => (
-                    <li key={project.id}>{project.title}</li>
+                    <li
+                        key={project.id}
+                        onClick={() => selectProject(project.id)}
+                    >
+                        {project.title}
+                    </li>
                 ))}
             </ul>
         </div>

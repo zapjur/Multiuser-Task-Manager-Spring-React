@@ -1,12 +1,15 @@
 import '../mainAppComponents/App.css';
 import { FormContextProvider } from "../context/FormContext";
 import MainAppPage from "../mainAppComponents/MainAppPage";
+import {SelectedProjectProvider} from "../context/SelectedProjectContext";
 
 function App(){
 
     return(
         <FormContextProvider>
-            <MainAppPage/>
+            <SelectedProjectProvider>
+                <MainAppPage/>
+            </SelectedProjectProvider>
         </FormContextProvider>
     );
 }
