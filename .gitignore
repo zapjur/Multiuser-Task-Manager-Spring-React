@@ -48,3 +48,4 @@ src/main/webapp/WEB-INF/ftl/rsrc/
 src/main/webapp/rsrc/dist/
 src/main/resources/application-local.properties
 webpack-assets.json
+/backend/.idea/
