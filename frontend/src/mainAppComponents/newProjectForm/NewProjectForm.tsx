@@ -1,10 +1,10 @@
 import './NewProjectForm.css';
 import {useFormContext} from "../../context/FormContext";
 import CloseButton from "../../buttons/CloseButton";
-import React, {useContext} from "react";
 import CreateProjectButton from "../../buttons/CreateProjectButton";
 import {request} from '../../axios_helper';
 import {useSelectedProject} from "../../context/SelectedProjectContext";
+import React from "react";
 
 
 

@@ -103,24 +103,6 @@
     padding-left: 5%;
 }
 
-.newTaskButton {
-    width: 100%;
-    height: 40px;
-    background-color: white;
-    color: #0073e6;
-    font-weight: bold;
-    border-radius: 40px;
-    border: none;
-    font-size: 20px;
-}
-
-.newTaskContainer {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    padding: 20px 10px 30px 10px;
-}
-
 .projectList {
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -214,40 +196,6 @@
 .sectionTitle {
     font-weight: bold;
  }
-
-.taskBoardContainer {
-    display: flex;
-    flex-direction: row;
-    gap: 32px;
-    padding-left: 2vh;
-    padding-right: 2vh;
-    padding-top: 2vh;
-}
-
-.taskPanel {
-    background-color: #e9ecef;
-    border-radius: 50px;
-    width: 25%;
-}
-
-.taskSectionContainer {
-    background-color: #f8f9fa;
-    height: 90vh;
-}
-
-.taskStatus {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    gap: 10px;
-    padding-left: 24px;
-    padding-top: 16px;
-}
-
-.taskStatus h5 {
-    font-weight: bold;
-    margin: 0;
-}
 
 .topPanel {
     display: flex;

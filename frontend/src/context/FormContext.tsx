@@ -3,6 +3,9 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 export const FormContext = createContext<{
     isFormVisible: boolean;
     toggleFormVisibility: () => void;
+    isTaskFormVisible: boolean;
+    toggleTaskFormVisibility: (status?: string) => void;
+    currentStatus: string;
 } | undefined>(undefined);
 
 export const useFormContext = () => {
@@ -19,11 +22,23 @@ type FormContextProviderProps = {
 
 export const FormContextProvider: React.FC<FormContextProviderProps> = ({ children }) => {
     const [isFormVisible, setIsFormVisible] = useState(false);
+    const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
+    const [currentStatus, setCurrentStatus] = useState('');
 
     const toggleFormVisibility = () => setIsFormVisible(!isFormVisible);
+    const toggleTaskFormVisibility = (status = '') => {
+        setIsTaskFormVisible(!isTaskFormVisible);
+        setCurrentStatus(status);
+    }
 
     return (
-        <FormContext.Provider value={{ isFormVisible, toggleFormVisibility }}>
+        <FormContext.Provider value={{
+            isFormVisible,
+            toggleFormVisibility,
+            isTaskFormVisible,
+            toggleTaskFormVisibility,
+            currentStatus
+        }}>
             {children}
         </FormContext.Provider>
     );
