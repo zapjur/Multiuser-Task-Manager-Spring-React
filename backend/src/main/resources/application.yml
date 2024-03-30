@@ -2,9 +2,9 @@ security.jwt.token.secret-key: my-secret-key
 
 spring:
   datasource:
-    url: jdbc:postgresql://balarama.db.elephantsql.com/wklwobuw
-    username: wklwobuw
-    password: evBI9t3CmGU6311Cl6g4MuJsYVgeAftA
+    url: jdbc:postgresql://dpg-co48nu21hbls73bqqeng-a.frankfurt-postgres.render.com:5432/multiuser_task_manager_db
+    username: multiuser_task_manager_db_user
+    password: 5H2Jhu8QYtN56B0GegVnz9HztAqOlVH7
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
