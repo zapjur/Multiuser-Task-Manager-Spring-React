@@ -1,4 +1,5 @@
 import './TaskStyles.css'
+import ScheduleIcon from '@mui/icons-material/Schedule';
 
 interface Task {
     title: string;
@@ -29,7 +30,12 @@ function Task({ task }: TaskProps) {
         <div className="taskContainer">
             <h5>{task.title}</h5>
             <p>{task.description}</p>
-            <p>{formattedDate}</p>
+            <div className="deadlineContainer">
+                <ScheduleIcon/>
+                <p>
+                    {formattedDate}
+                </p>
+            </div>
         </div>
     );
 }
