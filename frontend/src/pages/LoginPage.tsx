@@ -33,7 +33,7 @@ function LoginPage() {
                 login: username,
                 password: password
             });
-            navigate("/mainapp");
+            navigate("/app");
             setAuthToken(response.data.token);
         } catch (error) {
             console.error(error);
