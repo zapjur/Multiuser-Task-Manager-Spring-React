@@ -34,7 +34,7 @@ function TaskPanel({ status }: TaskPanelProps) {
             </div>
             <div className="tasks">
                 {filteredTasks.map(task => (
-                    <Task key={task.id} title={task.title} description={task.description}/>
+                    <Task key={task.id} task={task}/>
                 ))}
             </div>
         </div>

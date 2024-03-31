@@ -33,22 +33,40 @@
 }
 
 .taskContainer {
-    width: 80%;
+    width: 90%;
     background-color: whitesmoke;
     border-radius: 24px;
     margin-bottom: 24px;
     padding-left: 16px;
+    padding-right: 16px;
 }
 
 .taskContainer h5 {
     padding-top: 12px;
 }
 
+.taskContainer p, .taskContainer h5 {
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
 .taskPanel {
     background-color: #e9ecef;
     border-radius: 50px;
     width: 25%;
+    max-height: 88vh;
+    -webkit-overflow-scrolling: touch;
+    overflow-y: auto;
+    overflow-x: hidden;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
+
+.taskPanel::-webkit-scrollbar {
+    display: none;
+}
+
 
 .taskSectionContainer {
     background-color: #f8f9fa;

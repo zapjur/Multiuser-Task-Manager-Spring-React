@@ -21,7 +21,8 @@ function AddTaskForm() {
             selectedProjectId,
             title: formData.get('title'),
             description: formData.get('description'),
-            status: currentStatus
+            status: currentStatus,
+            deadline: formData.get('deadline') || undefined
         };
 
         try {
@@ -51,6 +52,10 @@ function AddTaskForm() {
                 <div className="inputContainer">
                     <label className="form-label">Description</label>
                     <input name="description" type="text" className="form-control"/>
+                </div>
+                <div className="inputContainer">
+                    <label>Deadline (optional)</label>
+                    <input name="deadline" type="datetime-local" className="form-control"/>
                 </div>
                 <AddTaskButton type="submit"/>
             </form>

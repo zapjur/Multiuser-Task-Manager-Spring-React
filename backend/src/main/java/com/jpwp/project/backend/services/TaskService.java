@@ -27,6 +27,7 @@ public class TaskService {
         task.setDescription(taskDto.getDescription());
         task.setStatus(taskDto.getStatus());
         task.setProject(project);
+        task.setDeadline(taskDto.getDeadline());
 
         return taskRepository.save(task);
     }

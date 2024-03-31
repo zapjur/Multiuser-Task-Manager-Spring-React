@@ -13,6 +13,7 @@ interface Task {
     description: string;
     status: string;
     projectId: number;
+    deadline: number[];
 }
 
 interface SelectedProjectProviderProps {
