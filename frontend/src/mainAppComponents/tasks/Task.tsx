@@ -1,11 +1,16 @@
 import './TaskStyles.css'
 
-function Task() {
+interface TaskProps {
+    title: string;
+    description: string;
+}
+
+function Task({ title, description } : TaskProps) {
 
     return (
         <div className="taskContainer">
-            <h5>Title</h5>
-            <p>Description</p>
+            <h5>{title}</h5>
+            <p>{description}</p>
         </div>
     );
 }

@@ -4,25 +4,31 @@ import {useFormContext} from "../../context/FormContext";
 import React from "react";
 import AddTaskButton from "../../buttons/AddTaskButton";
 import {request} from "../../axios_helper";
+import {useSelectedProject} from "../../context/SelectedProjectContext";
+import task from "../tasks/Task";
 
 function AddTaskForm() {
 
     const { toggleTaskFormVisibility, currentStatus } = useFormContext();
 
+    const { selectedProjectId, addTask } = useSelectedProject();
+
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const form = event.target as HTMLFormElement;
-        const titleInput = form.elements.namedItem('title') as HTMLInputElement;
-        const descriptionInput = form.elements.namedItem('description') as HTMLInputElement;
+        const formData = new FormData(event.target as HTMLFormElement);
 
-        const title = titleInput.value;
-        const description = descriptionInput.value;
-        const taskData = { title, description, status: currentStatus };
+        const taskData = {
+            selectedProjectId,
+            title: formData.get('title'),
+            description: formData.get('description'),
+            status: currentStatus
+        };
 
         try {
             const response = await request('post', '/tasks', taskData);
             if (response.status === 200 || response.status === 201) {
                 console.log('Task został pomyślnie utworzony:', response.data);
+                addTask(response.data)
                 toggleTaskFormVisibility();
             } else {
                 console.error('Nie udało się utworzyć tasku');

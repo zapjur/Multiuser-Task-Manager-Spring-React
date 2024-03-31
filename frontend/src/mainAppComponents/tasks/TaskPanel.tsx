@@ -2,6 +2,7 @@ import './TaskStyles.css'
 import ColoredDot from "../ColoredDot";
 import CreateTaskButton from "../../buttons/CreateTaskButton";
 import Task from "./Task";
+import {useSelectedProject} from "../../context/SelectedProjectContext";
 
 type TaskStatus = "To Do" | "Doing" | "In Review" | "Done";
 
@@ -11,12 +12,16 @@ interface TaskPanelProps {
 
 function TaskPanel({ status }: TaskPanelProps) {
 
+    const { tasks } = useSelectedProject();
+
     const statusColors: { [key in TaskStatus]: string } = {
         "To Do": "#f94144",
         "Doing": "#f8961e",
         "In Review": "#f9c74f",
         "Done": "#57cc99",
     };
+
+    const filteredTasks = tasks.filter(task => task.status === status);
 
     return (
         <div className="taskPanel">
@@ -28,7 +33,9 @@ function TaskPanel({ status }: TaskPanelProps) {
                 <CreateTaskButton status={status}/>
             </div>
             <div className="tasks">
-                <Task/>
+                {filteredTasks.map(task => (
+                    <Task key={task.id} title={task.title} description={task.description}/>
+                ))}
             </div>
         </div>
     );

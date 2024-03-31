@@ -7,6 +7,14 @@ interface Project {
     description: string;
 }
 
+interface Task {
+    id: number;
+    title: string;
+    description: string;
+    status: string;
+    projectId: number;
+}
+
 interface SelectedProjectProviderProps {
     children: ReactNode;
 }
@@ -17,6 +25,9 @@ interface SelectedProjectContextType {
     projects: Project[];
     setProjects: React.Dispatch<React.SetStateAction<Project[]>>;
     deleteProject: (projectId: number) => Promise<void>;
+    tasks: Task[];
+    fetchTasksForProject: (projectId: number) => Promise<void>;
+    addTask: (newTask: Task) => void;
 }
 
 const defaultContextValue: SelectedProjectContextType = {
@@ -25,6 +36,9 @@ const defaultContextValue: SelectedProjectContextType = {
     projects: [],
     setProjects: () => {},
     deleteProject: async () => {},
+    tasks: [],
+    fetchTasksForProject: async () => {},
+    addTask: () => {},
 };
 
 const SelectedProjectContext = createContext<SelectedProjectContextType>(defaultContextValue);
@@ -34,6 +48,7 @@ export const useSelectedProject = () => useContext(SelectedProjectContext);
 export const SelectedProjectProvider: React.FC<SelectedProjectProviderProps> = ({ children }) => {
     const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
     const [projects, setProjects] = useState<Project[]>([]);
+    const [tasks, setTasks] = useState<Task[]>([]);
 
     const selectProject = (projectId: number | null) => {
         setSelectedProjectId(projectId);
@@ -53,8 +68,35 @@ export const SelectedProjectProvider: React.FC<SelectedProjectProviderProps> = (
         }
     };
 
+
+    const fetchTasksForProject = async (projectId: number) => {
+        try {
+            const response = await request('get', `/tasks/project/${projectId}`);
+            if (response.status === 200) {
+                setTasks(response.data);
+            } else {
+                console.error('Nie udało się pobrać zadań dla projektu');
+            }
+        } catch (error) {
+            console.error("Wystąpił błąd podczas pobierania zadań:", error);
+        }
+    };
+
+    const addTask = (newTask: Task) => {
+        setTasks((prevTasks) => [...prevTasks, newTask]);
+    };
+
     return (
-        <SelectedProjectContext.Provider value={{ selectedProjectId, selectProject, projects, setProjects, deleteProject }}>
+        <SelectedProjectContext.Provider value={{
+            selectedProjectId,
+            selectProject,
+            projects,
+            setProjects,
+            deleteProject,
+            tasks,
+            fetchTasksForProject,
+            addTask,
+        }}>
             {children}
         </SelectedProjectContext.Provider>
     );

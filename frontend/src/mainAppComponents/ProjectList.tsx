@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { request } from '../axios_helper';
 import './mainAppStyles.css';
 import { useSelectedProject } from "../context/SelectedProjectContext";
@@ -11,7 +11,7 @@ interface Project {
 
 const ProjectList = () => {
 
-    const { projects, selectProject, setProjects } = useSelectedProject();
+    const { projects, selectProject, setProjects, fetchTasksForProject } = useSelectedProject();
 
     useEffect(() => {
         const fetchProjects = async () => {
@@ -30,13 +30,18 @@ const ProjectList = () => {
         fetchProjects();
     }, [setProjects]);
 
+    const handleProjectClick = async (projectId: number) => {
+        selectProject(projectId);
+        await fetchTasksForProject(projectId);
+    };
+
     return (
         <div className="projectList">
             <ul>
                 {projects.map(project => (
                     <li
                         key={project.id}
-                        onClick={() => selectProject(project.id)}
+                        onClick={() => handleProjectClick(project.id)}
                     >
                         {project.title}
                     </li>
