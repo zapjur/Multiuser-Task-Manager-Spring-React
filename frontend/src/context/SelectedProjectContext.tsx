@@ -29,6 +29,8 @@ interface SelectedProjectContextType {
     tasks: Task[];
     fetchTasksForProject: (projectId: number) => Promise<void>;
     addTask: (newTask: Task) => void;
+    updateTaskStatus: (taskId: number, newStatus: string) => void;
+
 }
 
 const defaultContextValue: SelectedProjectContextType = {
@@ -40,6 +42,7 @@ const defaultContextValue: SelectedProjectContextType = {
     tasks: [],
     fetchTasksForProject: async () => {},
     addTask: () => {},
+    updateTaskStatus: () => {},
 };
 
 const SelectedProjectContext = createContext<SelectedProjectContextType>(defaultContextValue);
@@ -87,6 +90,18 @@ export const SelectedProjectProvider: React.FC<SelectedProjectProviderProps> = (
         setTasks((prevTasks) => [...prevTasks, newTask]);
     };
 
+    const updateTaskStatus = async (taskId: number, newStatus: string) => {
+        setTasks((prevTasks) => prevTasks.map(task =>
+            task.id === taskId ? {...task, status: newStatus} : task
+        ));
+
+        try {
+            await request('put', `/tasks/${taskId}`, {status: newStatus});
+        } catch (error) {
+            console.error("Nie udało się zaktualizować zadania", error);
+        }
+    };
+
     return (
         <SelectedProjectContext.Provider value={{
             selectedProjectId,
@@ -97,6 +112,7 @@ export const SelectedProjectProvider: React.FC<SelectedProjectProviderProps> = (
             tasks,
             fetchTasksForProject,
             addTask,
+            updateTaskStatus,
         }}>
             {children}
         </SelectedProjectContext.Provider>

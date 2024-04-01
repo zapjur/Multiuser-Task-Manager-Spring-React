@@ -3,6 +3,7 @@ import ColoredDot from "../ColoredDot";
 import CreateTaskButton from "../../buttons/CreateTaskButton";
 import Task from "./Task";
 import {useSelectedProject} from "../../context/SelectedProjectContext";
+import { useDrop } from 'react-dnd';
 
 type TaskStatus = "To Do" | "Doing" | "In Review" | "Done";
 
@@ -10,9 +11,29 @@ interface TaskPanelProps {
     status: TaskStatus;
 }
 
+interface TaskProps {
+    title: string;
+    description: string;
+    deadline: number[];
+    id: number;
+    status: string;
+}
+
 function TaskPanel({ status }: TaskPanelProps) {
 
-    const { tasks } = useSelectedProject();
+    const { tasks, updateTaskStatus } = useSelectedProject();
+
+    const [{ isOver }, drop] = useDrop(() => ({
+        accept: "TASK",
+        drop: (item: TaskProps, monitor) => {
+            if (!monitor.didDrop() && item.status !== status) {
+                updateTaskStatus(item.id, status);
+            }
+        },
+        collect: monitor => ({
+            isOver: !!monitor.isOver(),
+        }),
+    }));
 
     const statusColors: { [key in TaskStatus]: string } = {
         "To Do": "#f94144",
@@ -24,7 +45,7 @@ function TaskPanel({ status }: TaskPanelProps) {
     const filteredTasks = tasks.filter(task => task.status === status);
 
     return (
-        <div className="taskPanel">
+        <div className="taskPanel" ref={drop} style={{ backgroundColor: isOver ? 'lightgrey' : '' }}>
             <div className="taskStatus">
                 <ColoredDot color={statusColors[status] || "#000000"}/>
                 <h5>{status}</h5>

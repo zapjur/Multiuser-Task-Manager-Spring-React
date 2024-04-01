@@ -36,4 +36,11 @@ public class TaskService {
         return taskRepository.findByProjectId(projectId);
     }
 
+    public void updateTaskStatus(Long taskId, String newStatus) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + taskId));
+        task.setStatus(newStatus);
+        taskRepository.save(task);
+    }
+
 }

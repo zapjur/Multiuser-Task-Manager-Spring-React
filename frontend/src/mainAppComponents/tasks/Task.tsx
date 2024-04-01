@@ -1,10 +1,13 @@
 import './TaskStyles.css'
 import ScheduleIcon from '@mui/icons-material/Schedule';
+import { useDrag } from 'react-dnd';
 
 interface Task {
     title: string;
     description: string;
     deadline: number[];
+    id: number;
+    status: string;
 }
 
 interface TaskProps {
@@ -26,8 +29,16 @@ function Task({ task }: TaskProps) {
         });
     }
 
+    const [{ isDragging }, drag] = useDrag(() => ({
+        type: 'TASK',
+        item: { id: task.id, status: task.status},
+        collect: (monitor) => ({
+            isDragging: !!monitor.isDragging(),
+        }),
+    }));
+
     return (
-        <div className="taskContainer">
+        <div className="taskContainer" ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
             <h5>{task.title}</h5>
             <p>{task.description}</p>
             <div className="deadlineContainer">

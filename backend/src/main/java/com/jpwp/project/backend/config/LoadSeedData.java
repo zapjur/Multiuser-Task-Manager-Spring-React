@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class LoadSeedData {
 
-    @Bean
+    /*@Bean
     CommandLineRunner initDatabase(ProjectRepository projectRepository) {
         return args -> {
 
@@ -23,5 +23,5 @@ public class LoadSeedData {
                 projectRepository.save(project);
             }
         };
-    }
+    }*/
 }

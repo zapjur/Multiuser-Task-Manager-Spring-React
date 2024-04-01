@@ -54,7 +54,6 @@
 .taskContainer p, .taskContainer h5 {
     white-space: normal;
     word-wrap: break-word;
-    word-break: break-all;
 }
 
 .taskPanel {
