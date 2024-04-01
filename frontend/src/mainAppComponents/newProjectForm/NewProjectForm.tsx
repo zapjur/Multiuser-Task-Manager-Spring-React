@@ -3,14 +3,14 @@ import {useFormContext} from "../../context/FormContext";
 import CloseButton from "../../buttons/CloseButton";
 import CreateProjectButton from "../../buttons/CreateProjectButton";
 import {request} from '../../axios_helper';
-import {useSelectedProject} from "../../context/SelectedProjectContext";
+import {useProjectContext} from "../../context/ProjectContext";
 import React from "react";
 
 
 
 function NewProjectForm() {
 
-    const { projects, setProjects } = useSelectedProject();
+    const { projects, setProjects } = useProjectContext();
     const { toggleFormVisibility } = useFormContext();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {

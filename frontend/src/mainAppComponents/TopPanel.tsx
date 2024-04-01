@@ -4,11 +4,11 @@ import starEmptyIcon from '../graphics/starEmpty.png'
 import starFullIcon from'../graphics/starFull.png'
 import AddMemberButton from "../buttons/AddMemberButton";
 import DeleteProjectButton from "../buttons/DeleteProjectButton";
-import { useSelectedProject } from "../context/SelectedProjectContext";
+import { useProjectContext } from "../context/ProjectContext";
 
 function TopPanel() {
 
-    const { selectedProjectId, projects, deleteProject} = useSelectedProject();
+    const { selectedProjectId, projects, deleteProject} = useProjectContext();
     const selectedProject = projects.find(p => p.id === selectedProjectId) || null;
 
     const [isStarFull, setIsStarFull] = React.useState(false);

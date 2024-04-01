@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { request } from '../axios_helper';
 import './mainAppStyles.css';
-import { useSelectedProject } from "../context/SelectedProjectContext";
+import { useProjectContext } from "../context/ProjectContext";
+import {useTaskContext} from "../context/TaskContext";
 
 interface Project {
     id: number;
@@ -11,7 +12,9 @@ interface Project {
 
 const ProjectList = () => {
 
-    const { projects, selectProject, setProjects, fetchTasksForProject } = useSelectedProject();
+    const { projects, selectProject, setProjects } = useProjectContext();
+
+    const { fetchTasksForProject } = useTaskContext();
 
     useEffect(() => {
         const fetchProjects = async () => {

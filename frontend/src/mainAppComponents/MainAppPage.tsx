@@ -6,12 +6,12 @@ import { useFormContext } from '../context/FormContext';
 import NewProjectForm from "./newProjectForm/NewProjectForm";
 import AddTaskForm from "./addTaskForm/AddTaskForm";
 import StartPanel from "./StartPanel";
-import {useSelectedProject} from "../context/SelectedProjectContext";
+import {useProjectContext} from "../context/ProjectContext";
 
 function MainAppPage() {
 
     const { isFormVisible, isTaskFormVisible } = useFormContext();
-    const { selectedProjectId } = useSelectedProject();
+    const { selectedProjectId } = useProjectContext();
 
     return (
         <div className="mainAppContainer">

@@ -4,14 +4,17 @@ import {useFormContext} from "../../context/FormContext";
 import React from "react";
 import AddTaskButton from "../../buttons/AddTaskButton";
 import {request} from "../../axios_helper";
-import {useSelectedProject} from "../../context/SelectedProjectContext";
+import {useProjectContext} from "../../context/ProjectContext";
 import task from "../tasks/Task";
+import {useTaskContext} from "../../context/TaskContext";
 
 function AddTaskForm() {
 
     const { toggleTaskFormVisibility, currentStatus } = useFormContext();
 
-    const { selectedProjectId, addTask } = useSelectedProject();
+    const { selectedProjectId} = useProjectContext();
+
+    const { addTask } = useTaskContext();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

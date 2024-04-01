@@ -2,8 +2,8 @@ import './TaskStyles.css'
 import ColoredDot from "../ColoredDot";
 import CreateTaskButton from "../../buttons/CreateTaskButton";
 import Task from "./Task";
-import {useSelectedProject} from "../../context/SelectedProjectContext";
 import { useDrop } from 'react-dnd';
+import {useTaskContext} from "../../context/TaskContext";
 
 type TaskStatus = "To Do" | "Doing" | "In Review" | "Done";
 
@@ -21,7 +21,7 @@ interface TaskProps {
 
 function TaskPanel({ status }: TaskPanelProps) {
 
-    const { tasks, updateTaskStatus } = useSelectedProject();
+    const { tasks, updateTaskStatus } = useTaskContext();
 
     const [{ isOver }, drop] = useDrop(() => ({
         accept: "TASK",
