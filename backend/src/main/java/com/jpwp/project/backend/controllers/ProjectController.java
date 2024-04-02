@@ -1,13 +1,16 @@
 package com.jpwp.project.backend.controllers;
 
 import com.jpwp.project.backend.dto.ProjectDto;
+import com.jpwp.project.backend.dto.UserDto;
 import com.jpwp.project.backend.entities.Project;
 import com.jpwp.project.backend.entities.User;
 import com.jpwp.project.backend.repositories.ProjectRepository;
+import com.jpwp.project.backend.services.ProjectService;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -22,6 +25,7 @@ public class ProjectController {
 
     private final ProjectRepository projectRepository;
     private final UserService userService;
+    private final ProjectService projectService;
 
     @GetMapping
     public ResponseEntity<List<ProjectDto>> getProjectsForCurrentUser() {
@@ -64,6 +68,18 @@ public class ProjectController {
 
         projectRepository.deleteById(projectId);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/members/{projectId}")
+    public ResponseEntity<?> addMemberToProject(@PathVariable Long projectId, @RequestBody UserDto userDto) {
+        try {
+            projectService.addMemberToProject(projectId, userDto.getLogin());
+            return ResponseEntity.ok().build();
+        } catch (UsernameNotFoundException | EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

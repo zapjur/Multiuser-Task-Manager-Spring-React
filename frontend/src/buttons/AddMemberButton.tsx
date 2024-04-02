@@ -1,15 +1,15 @@
 import Button from '@mui/material/Button';
+import {useFormContext} from "../context/FormContext";
 
 interface AddMemberButtonProps {
-    onClick?: () => void;
     type?: "button" | "submit" | "reset";
 }
 
-function AddMemberButton({ onClick, type = 'button' } : AddMemberButtonProps) {
+function AddMemberButton({type = 'button' } : AddMemberButtonProps) {
+
     return (
         <Button
             type={type}
-            onClick={onClick}
             sx={{
                 backgroundColor: '#0073e6',
                 color: 'whitesmoke',

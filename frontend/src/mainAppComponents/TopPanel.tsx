@@ -5,9 +5,12 @@ import starFullIcon from'../graphics/starFull.png'
 import AddMemberButton from "../buttons/AddMemberButton";
 import DeleteProjectButton from "../buttons/DeleteProjectButton";
 import { useProjectContext } from "../context/ProjectContext";
+import {useFormContext} from "../context/FormContext";
+import MoreOptionsButton from "../buttons/MoreOptionsButton";
 
 function TopPanel() {
 
+    const { toggleMemberFormVisibility } = useFormContext();
     const { selectedProjectId, projects, deleteProject} = useProjectContext();
     const selectedProject = projects.find(p => p.id === selectedProjectId) || null;
 
@@ -41,7 +44,19 @@ function TopPanel() {
               <div onClick={handleDelete}>
                 <DeleteProjectButton/>
               </div>
-              <div className="addMemberButtonContainer">
+              <div className="verticalLine">
+                  <MoreOptionsButton/>
+              </div>
+              <div>
+                  {
+                      selectedProject?.usersLogin
+                          ? selectedProject.usersLogin.length === 1
+                              ? '1 user'
+                              : `${selectedProject.usersLogin.length} users`
+                          : '0 users'
+                  }
+              </div>
+              <div onClick={toggleMemberFormVisibility} className="addMemberButtonContainer">
                 <AddMemberButton/>
               </div>
           </div>

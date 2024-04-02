@@ -3,14 +3,15 @@ import ProjectsSideBar from "./ProjectsSideBar";
 import TopPanel from "./TopPanel";
 import TaskBord from "./tasks/TaskBord";
 import { useFormContext } from '../context/FormContext';
-import NewProjectForm from "./newProjectForm/NewProjectForm";
-import AddTaskForm from "./addTaskForm/AddTaskForm";
+import NewProjectForm from "./forms/NewProjectForm";
+import AddTaskForm from "./forms/AddTaskForm";
 import StartPanel from "./StartPanel";
 import {useProjectContext} from "../context/ProjectContext";
+import AddMemberForm from "./forms/AddMemberForm";
 
 function MainAppPage() {
 
-    const { isFormVisible, isTaskFormVisible } = useFormContext();
+    const { isFormVisible, isTaskFormVisible, isMemberFormVisible } = useFormContext();
     const { selectedProjectId } = useProjectContext();
 
     return (
@@ -34,6 +35,7 @@ function MainAppPage() {
                 )}
                 {isFormVisible && <NewProjectForm />}
                 {isTaskFormVisible && <AddTaskForm />}
+                {isMemberFormVisible && <AddMemberForm />}
             </div>
         </div>
 );
