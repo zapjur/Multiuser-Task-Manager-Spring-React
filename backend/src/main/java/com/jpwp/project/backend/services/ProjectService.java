@@ -6,6 +6,7 @@ import com.jpwp.project.backend.repositories.ProjectRepository;
 import com.jpwp.project.backend.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final UserService userService;
 
     public void addMemberToProject(Long projectId, String username) {
         User user = userRepository.findByLogin(username)
@@ -25,5 +27,24 @@ public class ProjectService {
 
         project.getUsers().add(user);
         projectRepository.save(project);
+    }
+
+    public void deleteProject(Long projectId) {
+        User currentUser = userService.getCurrentUser();
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException("Project not found"));
+
+        if (!project.getOwner().equals(currentUser)) {
+            throw new AccessDeniedException("Not authorized to delete this project");
+        }
+
+        project.getTasks().forEach(task -> {
+            task.getAssignedUsers().forEach(user -> {
+                user.getTasks().remove(task);
+                userRepository.save(user);
+            });
+        });
+
+        projectRepository.deleteById(projectId);
     }
 }

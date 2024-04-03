@@ -5,6 +5,7 @@ import com.jpwp.project.backend.dto.UserDto;
 import com.jpwp.project.backend.entities.Project;
 import com.jpwp.project.backend.entities.User;
 import com.jpwp.project.backend.repositories.ProjectRepository;
+import com.jpwp.project.backend.repositories.UserRepository;
 import com.jpwp.project.backend.services.ProjectService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,7 @@ public class ProjectController {
     private final ProjectRepository projectRepository;
     private final UserService userService;
     private final ProjectService projectService;
+    private final UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<List<ProjectDto>> getProjectsForCurrentUser() {
@@ -58,15 +60,7 @@ public class ProjectController {
 
     @DeleteMapping("/{projectId}")
     public ResponseEntity<Void> deleteProject(@PathVariable Long projectId) {
-        User currentUser = userService.getCurrentUser();
-        Project project = projectRepository.findById(projectId)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found"));
-
-        if(!project.getOwner().equals(currentUser)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized to delete this project");
-        }
-
-        projectRepository.deleteById(projectId);
+        projectService.deleteProject(projectId);
         return ResponseEntity.ok().build();
     }
 

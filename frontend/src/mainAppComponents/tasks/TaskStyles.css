@@ -47,10 +47,6 @@
     padding-right: 16px;
 }
 
-.taskContainer h5 {
-    padding-top: 12px;
-}
-
 .taskContainer p, .taskContainer h5 {
     white-space: normal;
     word-wrap: break-word;
@@ -90,4 +86,12 @@
 .taskStatus h5 {
     font-weight: bold;
     margin: 0;
+}
+
+.taskTitleContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-top: 12px;
+    gap: 24px;
 }

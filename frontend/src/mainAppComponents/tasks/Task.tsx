@@ -1,6 +1,7 @@
 import './TaskStyles.css'
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import { useDrag } from 'react-dnd';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 interface Task {
     title: string;
@@ -40,7 +41,10 @@ function Task({ task }: TaskProps) {
 
     return (
         <div className="taskContainer" ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
-            <h5>{task.title}</h5>
+            <div className="taskTitleContainer">
+                <h5>{task.title}</h5>
+                <MoreVertIcon/>
+            </div>
             <p>{task.description}</p>
             <ul>
                 {task.assignedUsers.map((user, index) => (
