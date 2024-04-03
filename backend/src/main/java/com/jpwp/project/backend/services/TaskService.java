@@ -38,6 +38,11 @@ public class TaskService {
                 .collect(Collectors.toList());
         task.setAssignedUsers(assignedUsers);
 
+        task.getAssignedUsers().forEach(user -> {
+            user.getTasks().add(task);
+            userRepository.save(user);
+        });
+
         return taskRepository.save(task);
     }
 

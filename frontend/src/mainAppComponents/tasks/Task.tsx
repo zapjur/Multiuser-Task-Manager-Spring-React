@@ -8,6 +8,7 @@ interface Task {
     deadline: number[];
     id: number;
     status: string;
+    assignedUsers: string[];
 }
 
 interface TaskProps {
@@ -41,6 +42,11 @@ function Task({ task }: TaskProps) {
         <div className="taskContainer" ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
             <h5>{task.title}</h5>
             <p>{task.description}</p>
+            <ul>
+                {task.assignedUsers.map((user, index) => (
+                    <li key={index}>{user}</li>
+                ))}
+            </ul>
             <div className="deadlineContainer">
                 <ScheduleIcon/>
                 <p>

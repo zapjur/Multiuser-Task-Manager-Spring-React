@@ -4,10 +4,13 @@ package com.jpwp.project.backend.services;
 import com.jpwp.project.backend.dto.CredentialsDto;
 import com.jpwp.project.backend.dto.SignUpDto;
 import com.jpwp.project.backend.dto.UserDto;
+import com.jpwp.project.backend.entities.Task;
 import com.jpwp.project.backend.entities.User;
 import com.jpwp.project.backend.exceptions.AppException;
 import com.jpwp.project.backend.mappers.UserMapper;
+import com.jpwp.project.backend.repositories.TaskRepository;
 import com.jpwp.project.backend.repositories.UserRepository;
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,6 +28,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
+    private final TaskRepository taskRepository;
 
     public UserDto findByLogin(String login) {
         User user = userRepository.findByLogin(login)
