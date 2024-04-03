@@ -1,19 +1,24 @@
 import './formsStyles.css'
 import CloseButton from "../../buttons/CloseButton";
 import {useFormContext} from "../../context/FormContext";
-import React from "react";
+import React, {useState} from "react";
 import AddTaskButton from "../../buttons/AddTaskButton";
 import {request} from "../../axios_helper";
 import {useProjectContext} from "../../context/ProjectContext";
 import {useTaskContext} from "../../context/TaskContext";
+import {Autocomplete, TextField} from "@mui/material";
 
 function AddTaskForm() {
 
     const { toggleTaskFormVisibility, currentStatus } = useFormContext();
 
-    const { selectedProjectId} = useProjectContext();
+    const { selectedProjectId, projects} = useProjectContext();
 
     const { addTask } = useTaskContext();
+
+    const selectedProject = projects.find(project => project.id === selectedProjectId);
+    const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
+
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -24,7 +29,8 @@ function AddTaskForm() {
             title: formData.get('title'),
             description: formData.get('description'),
             status: currentStatus,
-            deadline: formData.get('deadline') || undefined
+            deadline: formData.get('deadline') || undefined,
+            assignedUsers: selectedUsers
         };
 
         try {
@@ -54,6 +60,25 @@ function AddTaskForm() {
                 <div className="inputContainer">
                     <label className="form-label">Description</label>
                     <input name="description" type="text" className="form-control"/>
+                </div>
+                <div className="inputContainer">
+                    <Autocomplete
+                        multiple
+                        id="users-autocomplete"
+                        options={selectedProject ? selectedProject.users : []}
+                        value={selectedUsers}
+                        onChange={(event, newValue) => {
+                            setSelectedUsers(newValue);
+                        }}
+                        renderInput={(params) => (
+                            <TextField
+                                {...params}
+                                variant="outlined"
+                                label="Assign users"
+                                placeholder="Users"
+                            />
+                        )}
+                    />
                 </div>
                 <div className="inputContainer">
                     <label>Deadline (optional)</label>

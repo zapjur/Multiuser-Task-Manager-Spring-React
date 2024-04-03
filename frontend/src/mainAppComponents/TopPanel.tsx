@@ -49,10 +49,10 @@ function TopPanel() {
               </div>
               <div>
                   {
-                      selectedProject?.usersLogin
-                          ? selectedProject.usersLogin.length === 1
+                      selectedProject?.users
+                          ? selectedProject.users.length === 1
                               ? '1 user'
-                              : `${selectedProject.usersLogin.length} users`
+                              : `${selectedProject.users.length} users`
                           : '0 users'
                   }
               </div>

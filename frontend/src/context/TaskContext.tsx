@@ -12,6 +12,7 @@ interface Task {
     status: string;
     projectId: number;
     deadline: number[];
+    assignedUsers: string[];
 }
 
 interface TaskContextType {

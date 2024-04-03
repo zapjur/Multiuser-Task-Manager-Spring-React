@@ -6,6 +6,7 @@ import Fade from '@mui/material/Fade';
 import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import {Box} from "@mui/material";
 
 function MoreOptionsButton() {
@@ -58,6 +59,12 @@ function MoreOptionsButton() {
                     <DeleteIcon/>
                     <Box ml={1}>
                         Delete member
+                    </Box>
+                </MenuItem>
+                <MenuItem onClick={handleClose}>
+                    <ExitToAppIcon/>
+                    <Box ml={1}>
+                        Leave project
                     </Box>
                 </MenuItem>
             </Menu>

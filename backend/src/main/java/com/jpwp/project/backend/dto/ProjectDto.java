@@ -15,13 +15,13 @@ public class ProjectDto {
     private Long id;
     private String title;
     private String description;
-    private List<String> usersLogin;
+    private List<String> users;
 
     public ProjectDto(Project project) {
         this.id = project.getId();
         this.title = project.getTitle();
         this.description = project.getDescription();
-        this.usersLogin = project.getUsers().stream()
+        this.users = project.getUsers().stream()
                 .map(User::getLogin)
                 .collect(Collectors.toList());
     }

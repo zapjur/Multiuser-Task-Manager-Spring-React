@@ -5,7 +5,7 @@ interface Project {
     id: number;
     title: string;
     description: string;
-    usersLogin: string[];
+    users: string[];
 }
 
 interface ProjectProviderProps {

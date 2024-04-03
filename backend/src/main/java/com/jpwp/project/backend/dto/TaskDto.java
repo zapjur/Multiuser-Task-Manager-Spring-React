@@ -1,10 +1,13 @@
 package com.jpwp.project.backend.dto;
 
 import com.jpwp.project.backend.entities.Task;
+import com.jpwp.project.backend.entities.User;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -16,6 +19,7 @@ public class TaskDto {
     private String status;
     private Long selectedProjectId;
     private LocalDateTime deadline;
+    private List<String> assignedUsers;
 
     public TaskDto(Task task) {
         this.id = task.getId();
@@ -24,6 +28,9 @@ public class TaskDto {
         this.status = task.getStatus();
         this.selectedProjectId = task.getProject().getId();
         this.deadline = task.getDeadline();
+        this.assignedUsers = task.getAssignedUsers().stream()
+                .map(User::getLogin)
+                .collect(Collectors.toList());
     }
 
 }
