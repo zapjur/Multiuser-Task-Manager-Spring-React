@@ -57,4 +57,21 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    public Task updateTask(Long taskId, TaskDto taskDto) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + taskId));
+
+        task.setTitle(taskDto.getTitle());
+        task.setDescription(taskDto.getDescription());
+        task.setDeadline(taskDto.getDeadline());
+
+        List<User> assignedUsers = taskDto.getAssignedUsers().stream()
+                .map(login -> userRepository.findByLogin(login)
+                        .orElseThrow(() -> new EntityNotFoundException("User not found with login: " + login)))
+                .collect(Collectors.toList());
+        task.setAssignedUsers(assignedUsers);
+
+        return taskRepository.save(task);
+    }
+
 }

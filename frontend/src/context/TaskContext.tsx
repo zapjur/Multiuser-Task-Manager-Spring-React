@@ -20,6 +20,7 @@ interface TaskContextType {
     fetchTasksForProject: (projectId: number) => Promise<void>;
     addTask: (newTask: Task) => void;
     updateTaskStatus: (taskId: number, newStatus: string) => void;
+    updateTask: (updatedTask: Task) => Promise<void>;
 
 }
 
@@ -28,6 +29,7 @@ const defaultContextValue: TaskContextType = {
     fetchTasksForProject: async () => {},
     addTask: () => {},
     updateTaskStatus: () => {},
+    updateTask: async (updatedTask: Task) => {},
 };
 
 const TaskContext = createContext<TaskContextType>(defaultContextValue);
@@ -54,6 +56,10 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
         setTasks((prevTasks) => [...prevTasks, newTask]);
     };
 
+    const updateTask = async (updatedTask: Task) => {
+        setTasks((prevTasks) => prevTasks.map(task => task.id === updatedTask.id ? {...updatedTask} : task));
+    }
+
     const updateTaskStatus = async (taskId: number, newStatus: string) => {
         setTasks((prevTasks) => prevTasks.map(task =>
             task.id === taskId ? {...task, status: newStatus} : task
@@ -72,6 +78,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
             fetchTasksForProject,
             addTask,
             updateTaskStatus,
+            updateTask,
         }}>
             {children}
         </TaskContext.Provider>

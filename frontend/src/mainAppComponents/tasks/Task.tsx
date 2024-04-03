@@ -1,12 +1,15 @@
 import './TaskStyles.css'
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import { useDrag } from 'react-dnd';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import IconButton from "@mui/material/IconButton";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import {useFormContext} from "../../context/FormContext";
 
 interface Task {
     title: string;
     description: string;
     deadline: number[];
+    projectId: number;
     id: number;
     status: string;
     assignedUsers: string[];
@@ -18,6 +21,8 @@ interface TaskProps {
 
 function Task({ task }: TaskProps) {
     let formattedDate = "No deadline";
+
+    const { toggleEditTaskFormVisibility, setEditingTask } = useFormContext();
 
     if (task.deadline && task.deadline.length >= 5) {
         const [year, month, day, hour, minute] = task.deadline;
@@ -39,11 +44,24 @@ function Task({ task }: TaskProps) {
         }),
     }));
 
+    const handleEditButtonClick = () => {
+        setEditingTask(task);
+        toggleEditTaskFormVisibility();
+    };
+
     return (
         <div className="taskContainer" ref={drag} style={{ opacity: isDragging ? 0.5 : 1 }}>
             <div className="taskTitleContainer">
                 <h5>{task.title}</h5>
-                <MoreVertIcon/>
+                <IconButton
+                    sx ={{
+                        color: 'black',
+                    }}
+                    onClick={handleEditButtonClick}
+                >
+                    <MoreVertIcon/>
+                </IconButton>
+
             </div>
             <p>{task.description}</p>
             <ul>

@@ -1,5 +1,15 @@
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
+interface Task {
+    id: number;
+    title: string;
+    description: string;
+    status: string;
+    projectId: number;
+    deadline: number[];
+    assignedUsers: string[];
+}
+
 export const FormContext = createContext<{
     isFormVisible: boolean;
     toggleFormVisibility: () => void;
@@ -8,6 +18,10 @@ export const FormContext = createContext<{
     currentStatus: string;
     isMemberFormVisible: boolean;
     toggleMemberFormVisibility: () => void;
+    isEditTaskFormVisible: boolean;
+    toggleEditTaskFormVisibility: () => void;
+    editingTask?: Task;
+    setEditingTask: (task: Task | undefined) => void;
 } | undefined>(undefined);
 
 export const useFormContext = () => {
@@ -27,6 +41,8 @@ export const FormContextProvider: React.FC<FormContextProviderProps> = ({ childr
     const [isTaskFormVisible, setIsTaskFormVisible] = useState(false);
     const [currentStatus, setCurrentStatus] = useState('');
     const [isMemberFormVisible, setIsMemberFormVisible] = useState(false);
+    const [isEditTaskFormVisible, setIsEditTaskFormVisible] = useState(false);
+    const [editingTask, setEditingTask] = useState<Task | undefined>(undefined);
 
     const toggleFormVisibility = () => setIsFormVisible(!isFormVisible);
     const toggleTaskFormVisibility = (status = '') => {
@@ -35,6 +51,9 @@ export const FormContextProvider: React.FC<FormContextProviderProps> = ({ childr
     }
 
     const toggleMemberFormVisibility = () => setIsMemberFormVisible(!isMemberFormVisible);
+
+    const toggleEditTaskFormVisibility = () => setIsEditTaskFormVisible(!isEditTaskFormVisible);
+
 
     return (
         <FormContext.Provider value={{
@@ -45,6 +64,10 @@ export const FormContextProvider: React.FC<FormContextProviderProps> = ({ childr
             currentStatus,
             isMemberFormVisible,
             toggleMemberFormVisibility,
+            isEditTaskFormVisible,
+            toggleEditTaskFormVisibility,
+            editingTask,
+            setEditingTask,
         }}>
             {children}
         </FormContext.Provider>
