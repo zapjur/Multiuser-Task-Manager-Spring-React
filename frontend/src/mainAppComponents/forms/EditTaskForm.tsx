@@ -6,13 +6,14 @@ import {useProjectContext} from "../../context/ProjectContext";
 import {useFormContext} from "../../context/FormContext";
 import { request } from "../../axios_helper";
 import {useTaskContext} from "../../context/TaskContext";
+import Button from '@mui/material/Button';
 
 
 function EditTaskForm() {
 
     const { selectedProjectId, projects} = useProjectContext();
     const { toggleEditTaskFormVisibility, editingTask } = useFormContext();
-    const { updateTask } = useTaskContext();
+    const { updateTask, deleteTask } = useTaskContext();
 
     const selectedProject = projects.find(project => project.id === selectedProjectId);
     const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
@@ -57,6 +58,12 @@ function EditTaskForm() {
         }
     }, [editingTask]);
 
+    const handleDelete = () => {
+        if (editingTask?.id && window.confirm("Czy na pewno chcesz usunąć ten projekt?")) {
+            deleteTask(editingTask.id);
+            toggleEditTaskFormVisibility();
+        }
+    }
 
     return (
         <div className="formContainer">
@@ -94,6 +101,20 @@ function EditTaskForm() {
                     <label>Deadline (optional)</label>
                     <input name="deadline" type="datetime-local" className="form-control" defaultValue={defaultValueForDatetimeLocal}/>
                 </div>
+                <Button variant="outlined"
+                        color="error"
+                        sx={{
+                            fontWeight: 'bold',
+                            borderRadius: '56px',
+                            width: '100%',
+                            height: '100%',
+                            textTransform: 'none',
+                            fontSize: '1rem',
+                        }}
+                        onClick={handleDelete}
+                >
+                    Delete task
+                </Button>
                 <EditTaskButton type="submit"/>
             </form>
         </div>

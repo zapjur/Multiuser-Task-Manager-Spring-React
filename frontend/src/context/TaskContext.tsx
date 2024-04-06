@@ -21,6 +21,7 @@ interface TaskContextType {
     addTask: (newTask: Task) => void;
     updateTaskStatus: (taskId: number, newStatus: string) => void;
     updateTask: (updatedTask: Task) => Promise<void>;
+    deleteTask: (taskId: number) => Promise<void>;
 
 }
 
@@ -29,7 +30,8 @@ const defaultContextValue: TaskContextType = {
     fetchTasksForProject: async () => {},
     addTask: () => {},
     updateTaskStatus: () => {},
-    updateTask: async (updatedTask: Task) => {},
+    updateTask: async () => {},
+    deleteTask: async () => {},
 };
 
 const TaskContext = createContext<TaskContextType>(defaultContextValue);
@@ -72,6 +74,15 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
         }
     };
 
+    const deleteTask = async (taskId: number) => {
+        try {
+            await request('delete', `/tasks/delete/${taskId}`);
+            setTasks(prevTasks => prevTasks.filter(task => task.id !== taskId));
+        } catch (error) {
+            console.error("Problem with deleting the task:", error);
+        }
+    };
+
     return (
         <TaskContext.Provider value={{
             tasks,
@@ -79,6 +90,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
             addTask,
             updateTaskStatus,
             updateTask,
+            deleteTask,
         }}>
             {children}
         </TaskContext.Provider>

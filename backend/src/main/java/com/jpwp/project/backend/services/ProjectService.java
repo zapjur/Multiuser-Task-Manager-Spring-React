@@ -45,6 +45,11 @@ public class ProjectService {
             });
         });
 
+        project.getUsers().forEach(user -> {
+            user.getProjects().remove(project);
+            userRepository.save(user);
+        });
+
         projectRepository.deleteById(projectId);
     }
 }

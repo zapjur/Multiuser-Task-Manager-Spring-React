@@ -31,7 +31,7 @@ function TaskPanel({ status }: TaskPanelProps) {
             }
         },
         collect: monitor => ({
-            isOver: !!monitor.isOver(),
+            isOver: monitor.isOver(),
         }),
     }));
 
@@ -47,8 +47,11 @@ function TaskPanel({ status }: TaskPanelProps) {
     return (
         <div className="taskPanel" ref={drop} style={{ backgroundColor: isOver ? 'lightgrey' : '' }}>
             <div className="taskStatus">
-                <ColoredDot color={statusColors[status] || "#000000"}/>
-                <h5>{status}</h5>
+                <div>
+                    <ColoredDot color={statusColors[status] || "#000000"}/>
+                    <h5>{status}</h5>
+                </div>
+                <h6>{filteredTasks.length}</h6>
             </div>
             <div className="newTaskContainer">
                 <CreateTaskButton status={status}/>

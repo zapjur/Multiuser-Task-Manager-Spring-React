@@ -10,6 +10,7 @@ import com.jpwp.project.backend.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -72,6 +73,23 @@ public class TaskService {
         task.setAssignedUsers(assignedUsers);
 
         return taskRepository.save(task);
+    }
+
+    @Transactional
+    public void deleteTask(Long taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + taskId));
+
+        Project project = task.getProject();
+        project.getTasks().remove(task);
+        projectRepository.save(project);
+
+        task.getAssignedUsers().forEach(user -> {
+            user.getTasks().remove(task);
+            userRepository.save(user);
+        });
+
+        taskRepository.deleteById(taskId);
     }
 
 }
