@@ -12,7 +12,7 @@ interface Project {
 
 const ProjectList = () => {
 
-    const { projects, selectProject, setProjects , favoriteProjects, setFavoriteProjects} = useProjectContext();
+    const { projects, selectProject, setProjects, setFavoriteProjects} = useProjectContext();
 
     const { fetchTasksForProject } = useTaskContext();
 

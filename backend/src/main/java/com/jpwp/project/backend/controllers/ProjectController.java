@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.jpwp.project.backend.services.UserService;
@@ -99,6 +100,13 @@ public class ProjectController {
     public ResponseEntity<?> removeProjectToFavorite(@PathVariable Long projectId) {
         projectService.removeProjectFromFavorite(projectId);
         return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/edit/{projectId}")
+    public ResponseEntity<ProjectDto> editProject(@PathVariable Long projectId, @RequestBody Map<String, String> projectData) {
+        Project project =  projectService.editProject(projectId, projectData);
+        ProjectDto responseDto = new ProjectDto(project);
+        return ResponseEntity.ok(responseDto);
     }
 
 

@@ -8,9 +8,11 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 import {Box} from "@mui/material";
+import {useFormContext} from "../context/FormContext";
 
 function MoreOptionsButton() {
 
+    const { toggleEditProjectFormVisibility } = useFormContext();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -19,6 +21,11 @@ function MoreOptionsButton() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+
+    const handleEditClick = () => {
+        setAnchorEl(null);
+        toggleEditProjectFormVisibility();
+    }
 
     return (
         <div>
@@ -49,7 +56,7 @@ function MoreOptionsButton() {
                 onClose={handleClose}
                 TransitionComponent={Fade}
             >
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleEditClick}>
                     <EditIcon/>
                     <Box ml={1}>
                         Edit project

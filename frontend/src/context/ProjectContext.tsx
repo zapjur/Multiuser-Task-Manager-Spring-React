@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { request } from "../axios_helper";
+import {useFormContext} from "./FormContext";
 
 interface Project {
     id: number;
@@ -22,6 +23,7 @@ interface ProjectContextType {
     favoriteProjects: Project[];
     addFavoriteProject: (project: Project) => void;
     removeFavoriteProject: (projectId: number) => void;
+    editProject: (updatedProject: Project, updatedProjectData: { title: string; description: string; }) => void;
 }
 
 const defaultContextValue: ProjectContextType = {
@@ -34,6 +36,7 @@ const defaultContextValue: ProjectContextType = {
     setFavoriteProjects: () => {},
     addFavoriteProject: () => {},
     removeFavoriteProject: () => {},
+    editProject: () => {},
 };
 
 const ProjectContext = createContext<ProjectContextType>(defaultContextValue);
@@ -44,6 +47,8 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) =>
     const [selectedProjectId, setSelectedProjectId] = useState<number | null>(null);
     const [projects, setProjects] = useState<Project[]>([]);
     const [favoriteProjects, setFavoriteProjects] = useState<Project[]>([]);
+
+    const { toggleEditProjectFormVisibility } = useFormContext();
 
     const selectProject = (projectId: number | null) => {
         setSelectedProjectId(projectId);
@@ -89,6 +94,26 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) =>
         }
     };
 
+    const editProject = async (updatedProject: Project, updatedProjectData: { title: string; description: string; }) => {
+        try {
+            const response = await request('put', `/projects/edit/${updatedProject.id}`, updatedProjectData);
+            if(response.status === 200) {
+                setProjects((prevProjects) => prevProjects.map(project =>
+                    project.id === updatedProject.id ? {...project, ...updatedProjectData} : project
+                ));
+                setFavoriteProjects(prevFavorites => prevFavorites.map(project =>
+                    project.id === updatedProject.id ? {...project, ...updatedProjectData} : project));
+                toggleEditProjectFormVisibility();
+            }
+            else {
+                console.error('Nie udało się zedytowac projektu');
+            }
+        }
+        catch (error) {
+            console.error('Wystąpił błąd podczas edycji projektu', error);
+        }
+    };
+
     return (
         <ProjectContext.Provider value={{
             selectedProjectId,
@@ -100,6 +125,7 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) =>
             setFavoriteProjects,
             addFavoriteProject,
             removeFavoriteProject,
+            editProject,
         }}>
             {children}
         </ProjectContext.Provider>

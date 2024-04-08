@@ -12,6 +12,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Map;
+
 @Service
 @RequiredArgsConstructor
 public class ProjectService {
@@ -73,5 +75,17 @@ public class ProjectService {
 
         currentUser.removeFavoriteProject(project);
         userRepository.save(currentUser);
+    }
+
+    public Project editProject(Long projectId, Map<String, String> projectData) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException("Project not found"));
+
+        project.setTitle(projectData.get("title"));
+        project.setDescription(projectData.get("description"));
+
+        projectRepository.save(project);
+
+        return project;
     }
 }

@@ -9,10 +9,11 @@ import StartPanel from "./StartPanel";
 import {useProjectContext} from "../context/ProjectContext";
 import AddMemberForm from "./forms/AddMemberForm";
 import EditTaskForm from "./forms/EditTaskForm";
+import EditProjectForm from "./forms/EditProjectForm";
 
 function MainAppPage() {
 
-    const { isFormVisible, isTaskFormVisible, isMemberFormVisible, isEditTaskFormVisible } = useFormContext();
+    const { isFormVisible, isTaskFormVisible, isMemberFormVisible, isEditTaskFormVisible, isEditProjectFormVisible } = useFormContext();
     const { selectedProjectId } = useProjectContext();
 
     return (
@@ -38,6 +39,7 @@ function MainAppPage() {
                 {isTaskFormVisible && <AddTaskForm />}
                 {isMemberFormVisible && <AddMemberForm />}
                 {isEditTaskFormVisible && <EditTaskForm />}
+                {isEditProjectFormVisible && <EditProjectForm />}
             </div>
         </div>
 );

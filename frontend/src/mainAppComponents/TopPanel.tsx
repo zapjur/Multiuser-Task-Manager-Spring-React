@@ -8,12 +8,26 @@ import { useProjectContext } from "../context/ProjectContext";
 import {useFormContext} from "../context/FormContext";
 import MoreOptionsButton from "../buttons/MoreOptionsButton";
 
+interface Project {
+    id: number;
+    title: string;
+    description: string;
+    users: string[];
+}
+
 function TopPanel() {
 
     const { toggleMemberFormVisibility } = useFormContext();
-    const { selectedProjectId, projects, deleteProject, addFavoriteProject, removeFavoriteProject, favoriteProjects} = useProjectContext();
-    const selectedProject = projects.find(p => p.id === selectedProjectId) || null;
+    const {
+        selectedProjectId,
+        projects,
+        deleteProject,
+        addFavoriteProject,
+        removeFavoriteProject,
+        favoriteProjects
+    } = useProjectContext();
 
+    const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [isStarred, setIsStarred] = useState(false);
 
     useEffect(() => {
@@ -21,6 +35,10 @@ function TopPanel() {
         setIsStarred(isFav);
     }, [selectedProjectId, favoriteProjects]);
 
+    useEffect(() => {
+        const project = projects.find(p => p.id === selectedProjectId) || null;
+        setSelectedProject(project);
+    }, [selectedProjectId, projects]);
 
     const toggleStar = () => {
         setIsStarred(!isStarred);
