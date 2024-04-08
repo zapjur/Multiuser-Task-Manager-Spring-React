@@ -38,9 +38,25 @@ public class User {
     @ManyToMany(mappedBy = "assignedUsers")
     private List<Task> tasks = new ArrayList<>();
 
+    @ManyToMany
+    @JoinTable(
+            name = "user_favorite_projects",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "project_id")
+    )
+    private List<Project> favoriteProjects = new ArrayList<>();
+
     public void addProject(Project project) {
         this.projects.add(project);
         project.getUsers().add(this);
+    }
+
+    public void addFavoriteProject(Project project) {
+        this.favoriteProjects.add(project);
+    }
+
+    public void removeFavoriteProject(Project project) {
+        this.favoriteProjects.remove(project);
     }
 
 

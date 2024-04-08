@@ -6,6 +6,8 @@ import com.jpwp.project.backend.repositories.ProjectRepository;
 import com.jpwp.project.backend.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.control.MappingControl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -51,5 +53,25 @@ public class ProjectService {
         });
 
         projectRepository.deleteById(projectId);
+    }
+
+    public void addProjectToFavorite(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException("Project not found"));
+
+        User currentUser = userService.getCurrentUser();
+
+        currentUser.addFavoriteProject(project);
+        userRepository.save(currentUser);
+    }
+
+    public void removeProjectFromFavorite(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException("Project not found"));
+
+        User currentUser = userService.getCurrentUser();
+
+        currentUser.removeFavoriteProject(project);
+        userRepository.save(currentUser);
     }
 }

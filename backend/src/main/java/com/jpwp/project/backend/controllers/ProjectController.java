@@ -9,6 +9,7 @@ import com.jpwp.project.backend.repositories.UserRepository;
 import com.jpwp.project.backend.services.ProjectService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.control.MappingControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -39,6 +40,18 @@ public class ProjectController {
                 .collect(Collectors.toList());
 
         return new ResponseEntity<>(projectDtos, HttpStatus.OK);
+    }
+
+    @GetMapping("/favorites")
+    public ResponseEntity<List<ProjectDto>> getFavoriteProjectsForCurrentUser() {
+        User currentUser = userService.getCurrentUser();
+        List<Project> favorites = currentUser.getFavoriteProjects();
+
+        List<ProjectDto> favoritesDtos = favorites.stream()
+                .map(ProjectDto::new)
+                .collect(Collectors.toList());
+
+        return new ResponseEntity<>(favoritesDtos, HttpStatus.OK);
     }
 
     @PostMapping
@@ -75,5 +88,18 @@ public class ProjectController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
+    @PutMapping("/favorites/{projectId}")
+    public ResponseEntity<?> addProjectToFavorite(@PathVariable Long projectId) {
+        projectService.addProjectToFavorite(projectId);
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping("/favorites/{projectId}")
+    public ResponseEntity<?> removeProjectToFavorite(@PathVariable Long projectId) {
+        projectService.removeProjectFromFavorite(projectId);
+        return ResponseEntity.ok().build();
+    }
+
 
 }

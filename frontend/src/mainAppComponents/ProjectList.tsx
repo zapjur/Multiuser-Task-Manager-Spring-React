@@ -12,7 +12,7 @@ interface Project {
 
 const ProjectList = () => {
 
-    const { projects, selectProject, setProjects } = useProjectContext();
+    const { projects, selectProject, setProjects , favoriteProjects, setFavoriteProjects} = useProjectContext();
 
     const { fetchTasksForProject } = useTaskContext();
 
@@ -32,6 +32,24 @@ const ProjectList = () => {
 
         fetchProjects();
     }, [setProjects]);
+
+    useEffect(() => {
+        const fetchFavoriteProjects = async () => {
+            try {
+                const response = await request('get', '/projects/favorites');
+                if (response.status === 200) {
+                    setFavoriteProjects(response.data);
+                } else {
+                    console.error('Nie udało się pobrać ulubionych projektów');
+                }
+            } catch (error) {
+                console.error('Wystąpił błąd podczas pobierania ulubionych projektów:', error);
+            }
+        };
+
+        fetchFavoriteProjects();
+    }, [setFavoriteProjects]);
+
 
     const handleProjectClick = async (projectId: number) => {
         selectProject(projectId);

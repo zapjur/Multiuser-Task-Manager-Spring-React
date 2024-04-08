@@ -5,6 +5,7 @@ import axios from 'axios';
 import {useState, useEffect} from "react";
 import { getAuthToken } from '../axios_helper';
 import ProjectList from "./ProjectList";
+import FavoritesList from "./FavoritesList";
 
 interface Project {
     id: number;
@@ -23,6 +24,7 @@ function ProjectsSideBar() {
                 <div className="sectionFavorite">
                     <h6 className="sectionTitle">Favorites</h6>
                     <div className="horizontalLine"></div>
+                    <FavoritesList/>
                 </div>
                 <div className="sectionAllProjects">
                     <h6 className="sectionTitle">All projects</h6>

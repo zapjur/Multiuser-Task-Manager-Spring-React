@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './mainAppStyles.css'
-import starEmptyIcon from '../graphics/starEmpty.png'
-import starFullIcon from'../graphics/starFull.png'
+import StarBorderIcon from '@mui/icons-material/StarBorder';
+import StarIcon from '@mui/icons-material/Star';
 import AddMemberButton from "../buttons/AddMemberButton";
 import DeleteProjectButton from "../buttons/DeleteProjectButton";
 import { useProjectContext } from "../context/ProjectContext";
@@ -11,18 +11,37 @@ import MoreOptionsButton from "../buttons/MoreOptionsButton";
 function TopPanel() {
 
     const { toggleMemberFormVisibility } = useFormContext();
-    const { selectedProjectId, projects, deleteProject} = useProjectContext();
+    const { selectedProjectId, projects, deleteProject, addFavoriteProject, removeFavoriteProject, favoriteProjects} = useProjectContext();
     const selectedProject = projects.find(p => p.id === selectedProjectId) || null;
 
-    const [isStarFull, setIsStarFull] = React.useState(false);
+    const [isStarred, setIsStarred] = useState(false);
+
+    useEffect(() => {
+        const isFav = favoriteProjects.some(project => project.id === selectedProjectId);
+        setIsStarred(isFav);
+    }, [selectedProjectId, favoriteProjects]);
+
 
     const toggleStar = () => {
-        setIsStarFull(!isStarFull);
+        setIsStarred(!isStarred);
     }
 
     const handleDelete = () => {
         if (selectedProjectId && window.confirm("Czy na pewno chcesz usunąć ten projekt?")) {
             deleteProject(selectedProjectId);
+        }
+    };
+
+    const handleAddToFavClick = () => {
+        if (selectedProject) {
+            addFavoriteProject(selectedProject);
+        }
+
+    };
+
+    const handleRemoveFromFavClick = () => {
+        if (selectedProjectId) {
+            removeFavoriteProject(selectedProjectId);
         }
     };
 
@@ -34,13 +53,9 @@ function TopPanel() {
               <p>{selectedProject ? selectedProject.description : "Opis projektu"}</p>
           </div>
           <div className="topPanelOptions col-md-6">
-              <img
-                  src={isStarFull ? starFullIcon : starEmptyIcon}
-                  alt="StarIcon"
-                  width={40}
-                  height={40}
-                  onClick={toggleStar}
-              />
+              <div onClick={toggleStar}>
+                  {isStarred ? <StarIcon onClick={handleRemoveFromFavClick} fontSize="large"/> : <StarBorderIcon onClick={handleAddToFavClick} fontSize="large"/>}
+              </div>
               <div onClick={handleDelete}>
                 <DeleteProjectButton/>
               </div>
