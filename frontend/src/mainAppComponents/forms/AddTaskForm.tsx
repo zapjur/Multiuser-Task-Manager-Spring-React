@@ -25,7 +25,7 @@ function AddTaskForm() {
         const formData = new FormData(event.target as HTMLFormElement);
 
         const taskData = {
-            selectedProjectId,
+            projectId: selectedProjectId,
             title: formData.get('title'),
             description: formData.get('description'),
             status: currentStatus,
