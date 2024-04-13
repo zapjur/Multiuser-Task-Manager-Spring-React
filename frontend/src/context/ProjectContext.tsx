@@ -1,6 +1,7 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { request } from "../axios_helper";
 import {useFormContext} from "./FormContext";
+import {useTaskContext} from "./TaskContext";
 
 interface Project {
     id: number;
@@ -24,6 +25,8 @@ interface ProjectContextType {
     addFavoriteProject: (project: Project) => void;
     removeFavoriteProject: (projectId: number) => void;
     editProject: (updatedProject: Project, updatedProjectData: { title: string; description: string; }) => void;
+    addMemberToProject: (projectId: number | null, newUser: string) => void;
+    removeMemberFromProject: (projectId: number | null, deleteUser: string[]) => void;
 }
 
 const defaultContextValue: ProjectContextType = {
@@ -37,6 +40,8 @@ const defaultContextValue: ProjectContextType = {
     addFavoriteProject: () => {},
     removeFavoriteProject: () => {},
     editProject: () => {},
+    addMemberToProject: () => {},
+    removeMemberFromProject: () => {},
 };
 
 const ProjectContext = createContext<ProjectContextType>(defaultContextValue);
@@ -114,6 +119,22 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) =>
         }
     };
 
+    const addMemberToProject = (projectId: number | null, newUser: string) => {
+        if (projectId === null) return;
+        setProjects(prevProjects => prevProjects.map(project =>
+            project.id === projectId ? { ...project, users: [...project.users, newUser] } : project
+        ));
+    };
+
+    const removeMemberFromProject = (projectId: number | null, removeUsers: string[]) => {
+        if (projectId === null) return;
+        setProjects(prevProjects => prevProjects.map(project =>
+            project.id === projectId ? { ...project, users: project.users.filter(user => !removeUsers.includes(user)) } : project
+        ));
+    };
+
+
+
     return (
         <ProjectContext.Provider value={{
             selectedProjectId,
@@ -126,6 +147,8 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) =>
             addFavoriteProject,
             removeFavoriteProject,
             editProject,
+            addMemberToProject,
+            removeMemberFromProject,
         }}>
             {children}
         </ProjectContext.Provider>

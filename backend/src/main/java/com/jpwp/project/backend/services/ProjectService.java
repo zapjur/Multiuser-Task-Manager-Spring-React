@@ -3,15 +3,16 @@ package com.jpwp.project.backend.services;
 import com.jpwp.project.backend.entities.Project;
 import com.jpwp.project.backend.entities.User;
 import com.jpwp.project.backend.repositories.ProjectRepository;
+import com.jpwp.project.backend.repositories.TaskRepository;
 import com.jpwp.project.backend.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.control.MappingControl;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -20,8 +21,10 @@ public class ProjectService {
 
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
+    private final TaskRepository taskRepository;
     private final UserService userService;
 
+    @Transactional
     public void addMemberToProject(Long projectId, String username) {
         User user = userRepository.findByLogin(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Nie znaleziono użytkownika o nazwie: " + username));
@@ -33,6 +36,36 @@ public class ProjectService {
         projectRepository.save(project);
     }
 
+    @Transactional
+    public void deleteMemberFromProject(Long projectId, List<String> usernames) {
+        User currentUser = userService.getCurrentUser();
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException("Project not found"));
+
+        if (!project.getOwner().equals(currentUser)) {
+            throw new AccessDeniedException("Not authorized to delete member from this project");
+        }
+
+        List<User> usersToRemove = userRepository.findByLoginIn(usernames)
+                .orElseThrow(() -> new EntityNotFoundException("Some users not found"));
+
+        usersToRemove.forEach(userToRemove -> {
+            project.getTasks().forEach(task -> {
+                if(task.getAssignedUsers().contains(userToRemove)) {
+                    task.getAssignedUsers().remove(userToRemove);
+                    userToRemove.getTasks().remove(task);
+                    taskRepository.save(task);
+                }
+            });
+
+            project.getUsers().remove(userToRemove);
+            userRepository.save(userToRemove);
+        });
+
+        projectRepository.save(project);
+    }
+
+    @Transactional
     public void deleteProject(Long projectId) {
         User currentUser = userService.getCurrentUser();
         Project project = projectRepository.findById(projectId)
@@ -57,6 +90,7 @@ public class ProjectService {
         projectRepository.deleteById(projectId);
     }
 
+    @Transactional
     public void addProjectToFavorite(Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found"));
@@ -67,6 +101,7 @@ public class ProjectService {
         userRepository.save(currentUser);
     }
 
+    @Transactional
     public void removeProjectFromFavorite(Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found"));
@@ -77,6 +112,7 @@ public class ProjectService {
         userRepository.save(currentUser);
     }
 
+    @Transactional
     public Project editProject(Long projectId, Map<String, String> projectData) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new EntityNotFoundException("Project not found"));

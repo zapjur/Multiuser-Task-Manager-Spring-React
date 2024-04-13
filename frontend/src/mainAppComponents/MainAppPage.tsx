@@ -10,10 +10,17 @@ import {useProjectContext} from "../context/ProjectContext";
 import AddMemberForm from "./forms/AddMemberForm";
 import EditTaskForm from "./forms/EditTaskForm";
 import EditProjectForm from "./forms/EditProjectForm";
+import DeleteMemberForm from "./forms/DeleteMemberForm";
 
 function MainAppPage() {
 
-    const { isFormVisible, isTaskFormVisible, isMemberFormVisible, isEditTaskFormVisible, isEditProjectFormVisible } = useFormContext();
+    const { isFormVisible,
+        isTaskFormVisible,
+        isMemberFormVisible,
+        isEditTaskFormVisible,
+        isEditProjectFormVisible,
+        isDeleteMemberFormVisible,
+    } = useFormContext();
     const { selectedProjectId } = useProjectContext();
 
     return (
@@ -40,6 +47,7 @@ function MainAppPage() {
                 {isMemberFormVisible && <AddMemberForm />}
                 {isEditTaskFormVisible && <EditTaskForm />}
                 {isEditProjectFormVisible && <EditProjectForm />}
+                {isDeleteMemberFormVisible && <DeleteMemberForm />}
             </div>
         </div>
 );

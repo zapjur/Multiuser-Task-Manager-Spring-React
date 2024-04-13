@@ -5,11 +5,9 @@ import com.jpwp.project.backend.dto.UserDto;
 import com.jpwp.project.backend.entities.Project;
 import com.jpwp.project.backend.entities.User;
 import com.jpwp.project.backend.repositories.ProjectRepository;
-import com.jpwp.project.backend.repositories.UserRepository;
 import com.jpwp.project.backend.services.ProjectService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.control.MappingControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,7 +17,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import com.jpwp.project.backend.services.UserService;
-import org.springframework.web.server.ResponseStatusException;
 
 @RestController
 @RequestMapping("/projects")
@@ -29,7 +26,6 @@ public class ProjectController {
     private final ProjectRepository projectRepository;
     private final UserService userService;
     private final ProjectService projectService;
-    private final UserRepository userRepository;
 
     @GetMapping
     public ResponseEntity<List<ProjectDto>> getProjectsForCurrentUser() {
@@ -88,6 +84,13 @@ public class ProjectController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+
+    @DeleteMapping("/members/{projectId}")
+    public ResponseEntity<?> deleteMemberFromProject(@PathVariable Long projectId, @RequestBody List<String> usersToDelete) {
+        projectService.deleteMemberFromProject(projectId, usersToDelete);
+
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("/favorites/{projectId}")

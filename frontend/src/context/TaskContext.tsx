@@ -1,5 +1,6 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { request } from "../axios_helper";
+import task from "../mainAppComponents/tasks/Task";
 
 interface TaskProviderProps {
     children: ReactNode;
@@ -22,6 +23,7 @@ interface TaskContextType {
     updateTaskStatus: (taskId: number, newStatus: string) => void;
     updateTask: (updatedTask: Task) => Promise<void>;
     deleteTask: (taskId: number) => Promise<void>;
+    removeUsersFromTasks: (projectId: number | null, selectedUsers: string[]) => void;
 
 }
 
@@ -32,6 +34,7 @@ const defaultContextValue: TaskContextType = {
     updateTaskStatus: () => {},
     updateTask: async () => {},
     deleteTask: async () => {},
+    removeUsersFromTasks: () => {},
 };
 
 const TaskContext = createContext<TaskContextType>(defaultContextValue);
@@ -83,6 +86,27 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
         }
     };
 
+    const removeUsersFromTasks = (projectId: number | null, selectedUsers: string[]) => {
+        if (projectId === null) return;
+
+        setTasks(prevTasks => {
+            const newTasks = prevTasks.map(task => {
+                if (task.projectId === projectId) {
+                    const newAssignedUsers = task.assignedUsers.filter(user => !selectedUsers.includes(user));
+                    return {
+                        ...task,
+                        assignedUsers: newAssignedUsers
+                    };
+                }
+                return task;
+            });
+            return newTasks;
+        });
+    };
+
+
+
+
     return (
         <TaskContext.Provider value={{
             tasks,
@@ -91,6 +115,7 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
             updateTaskStatus,
             updateTask,
             deleteTask,
+            removeUsersFromTasks,
         }}>
             {children}
         </TaskContext.Provider>

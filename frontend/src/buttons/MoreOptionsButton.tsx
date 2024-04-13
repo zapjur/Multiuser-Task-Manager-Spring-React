@@ -12,7 +12,7 @@ import {useFormContext} from "../context/FormContext";
 
 function MoreOptionsButton() {
 
-    const { toggleEditProjectFormVisibility } = useFormContext();
+    const { toggleEditProjectFormVisibility, toggleDeleteMemberFormVisibility } = useFormContext();
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -25,6 +25,11 @@ function MoreOptionsButton() {
     const handleEditClick = () => {
         setAnchorEl(null);
         toggleEditProjectFormVisibility();
+    }
+
+    const handleDeleteMemberClick = () => {
+        setAnchorEl(null);
+        toggleDeleteMemberFormVisibility();
     }
 
     return (
@@ -62,7 +67,7 @@ function MoreOptionsButton() {
                         Edit project
                     </Box>
                 </MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={handleDeleteMemberClick}>
                     <DeleteIcon/>
                     <Box ml={1}>
                         Delete member

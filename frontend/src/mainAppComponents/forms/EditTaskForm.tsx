@@ -101,17 +101,18 @@ function EditTaskForm() {
                     <label>Deadline (optional)</label>
                     <input name="deadline" type="datetime-local" className="form-control" defaultValue={defaultValueForDatetimeLocal}/>
                 </div>
-                <Button variant="outlined"
-                        color="error"
-                        sx={{
-                            fontWeight: 'bold',
-                            borderRadius: '56px',
-                            width: '100%',
-                            height: '100%',
-                            textTransform: 'none',
-                            fontSize: '1rem',
-                        }}
-                        onClick={handleDelete}
+                <Button
+                    variant="outlined"
+                    color="error"
+                    sx={{
+                        fontWeight: 'bold',
+                        borderRadius: '56px',
+                        width: '100%',
+                        height: '100%',
+                        textTransform: 'none',
+                        fontSize: '1rem',
+                    }}
+                    onClick={handleDelete}
                 >
                     Delete task
                 </Button>

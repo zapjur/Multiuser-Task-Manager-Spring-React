@@ -23,8 +23,9 @@ public class TaskService {
     private final ProjectRepository projectRepository;
     private final UserRepository userRepository;
 
+    @Transactional
     public Task createTask(TaskDto taskDto) {
-        Project project = projectRepository.findById(taskDto.getSelectedProjectId())
+        Project project = projectRepository.findById(taskDto.getProjectId())
                 .orElseThrow(() -> new EntityNotFoundException("Project not found"));
 
         Task task = new Task();
@@ -47,10 +48,12 @@ public class TaskService {
         return taskRepository.save(task);
     }
 
+    @Transactional(readOnly = true)
     public List<Task> findTasksByProjectId(Long projectId) {
         return taskRepository.findByProjectId(projectId);
     }
 
+    @Transactional
     public void updateTaskStatus(Long taskId, String newStatus) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + taskId));
@@ -58,6 +61,7 @@ public class TaskService {
         taskRepository.save(task);
     }
 
+    @Transactional
     public Task updateTask(Long taskId, TaskDto taskDto) {
         Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new EntityNotFoundException("Task not found with id: " + taskId));

@@ -10,12 +10,12 @@ function AddMemberForm() {
 
     const { toggleMemberFormVisibility } = useFormContext();
 
-    const { selectedProjectId } = useProjectContext();
+    const { selectedProjectId, addMemberToProject } = useProjectContext();
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const formData = new FormData(event.target as HTMLFormElement);
-        const login = formData.get('username');
+        const login = formData.get('username') as string;
 
         if (!login) {
             console.error('Username jest wymagany.');
@@ -28,7 +28,10 @@ function AddMemberForm() {
             const response = await request('put', `/projects/members/${selectedProjectId}`, userData);
             if (response.status === 200 || response.status === 201) {
                 console.log('Dodawanie membera zakończone sukcesem ', response.data);
+
+                addMemberToProject(selectedProjectId, login)
                 toggleMemberFormVisibility();
+
             } else {
                 console.error('Nie udało się dodać membera');
             }

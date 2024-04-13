@@ -17,7 +17,7 @@ public class TaskDto {
     private String title;
     private String description;
     private String status;
-    private Long selectedProjectId;
+    private Long projectId;
     private LocalDateTime deadline;
     private List<String> assignedUsers;
 
@@ -26,7 +26,7 @@ public class TaskDto {
         this.title = task.getTitle();
         this.description = task.getDescription();
         this.status = task.getStatus();
-        this.selectedProjectId = task.getProject().getId();
+        this.projectId = task.getProject().getId();
         this.deadline = task.getDeadline();
         this.assignedUsers = task.getAssignedUsers().stream()
                 .map(User::getLogin)
