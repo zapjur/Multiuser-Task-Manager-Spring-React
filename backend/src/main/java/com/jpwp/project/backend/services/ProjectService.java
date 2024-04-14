@@ -7,6 +7,7 @@ import com.jpwp.project.backend.repositories.TaskRepository;
 import com.jpwp.project.backend.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.mapstruct.control.MappingControl;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,34 @@ public class ProjectService {
             userRepository.save(userToRemove);
         });
 
+        projectRepository.save(project);
+    }
+
+    @Transactional
+    public void leaveProject(Long projectId) {
+        User currentUser = userService.getCurrentUser();
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException("Project not found"));
+
+        if(!project.getUsers().contains(currentUser)) {
+            throw new IllegalStateException("User is not part of the project");
+        }
+
+        project.getTasks().forEach(task -> {
+            if(task.getAssignedUsers().contains(currentUser)) {
+                task.getAssignedUsers().remove(currentUser);
+                currentUser.getTasks().remove(task);
+                taskRepository.save(task);
+            }
+        });
+
+        project.getUsers().remove(currentUser);
+        currentUser.getProjects().remove(project);
+        if(currentUser.getFavoriteProjects().contains(project)) {
+            currentUser.getFavoriteProjects().remove(project);
+        }
+
+        userRepository.save(currentUser);
         projectRepository.save(project);
     }
 

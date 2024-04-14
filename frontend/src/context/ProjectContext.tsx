@@ -134,7 +134,6 @@ export const ProjectProvider: React.FC<ProjectProviderProps> = ({ children }) =>
     };
 
 
-
     return (
         <ProjectContext.Provider value={{
             selectedProjectId,

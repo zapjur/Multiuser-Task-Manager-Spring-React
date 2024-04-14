@@ -112,5 +112,11 @@ public class ProjectController {
         return ResponseEntity.ok(responseDto);
     }
 
+    @DeleteMapping("/leave/{projectId}")
+    public ResponseEntity<?> leaveProject(@PathVariable Long projectId) {
+        projectService.leaveProject(projectId);
+        return ResponseEntity.ok().build();
+    }
+
 
 }
