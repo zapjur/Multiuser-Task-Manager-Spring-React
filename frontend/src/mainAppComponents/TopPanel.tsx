@@ -7,6 +7,8 @@ import DeleteProjectButton from "../buttons/DeleteProjectButton";
 import { useProjectContext } from "../context/ProjectContext";
 import {useFormContext} from "../context/FormContext";
 import MoreOptionsButton from "../buttons/MoreOptionsButton";
+import {Box, Dialog, DialogTitle, List, ListItem, ListItemText, Typography} from "@mui/material";
+import CloseButton from "../buttons/CloseButton";
 
 interface Project {
     id: number;
@@ -29,6 +31,7 @@ function TopPanel() {
 
     const [selectedProject, setSelectedProject] = useState<Project | null>(null);
     const [isStarred, setIsStarred] = useState(false);
+    const [usersModalOpen, setUsersModalOpen] = useState(false);
 
     useEffect(() => {
         const isFav = favoriteProjects.some(project => project.id === selectedProjectId);
@@ -63,6 +66,13 @@ function TopPanel() {
         }
     };
 
+    const handleUsersClick = () => {
+        setUsersModalOpen(true);
+    };
+
+    const handleClose = () => {
+        setUsersModalOpen(false);
+    };
 
     return(
       <div className="topPanel">
@@ -80,7 +90,7 @@ function TopPanel() {
               <div className="verticalLine">
                   <MoreOptionsButton/>
               </div>
-              <div>
+              <div onClick={handleUsersClick}>
                   {
                       selectedProject?.users
                           ? selectedProject.users.length === 1
@@ -93,6 +103,40 @@ function TopPanel() {
                 <AddMemberButton/>
               </div>
           </div>
+          <Dialog
+              onClose={handleClose}
+              open={usersModalOpen}
+              PaperProps={{
+                  style: {
+                      width: '20vw',
+                      maxWidth: '600px',
+                      borderRadius: 8,
+                      backgroundColor: '#f0f0f0',
+                      boxShadow: '0px 3px 15px rgba(0,0,0,0.2)'
+                  }
+              }}
+          >
+              <DialogTitle>
+                  <Box
+                      display="flex"
+                      justifyContent="space-between"
+                      alignItems="center"
+                      paddingX={2}
+                      paddingTop={2}
+                  >
+                      <Typography variant="h6" style={{ marginRight: 'auto' }}>Project Users</Typography>
+                      <CloseButton toggle={handleClose} />
+                  </Box>
+              </DialogTitle>
+              <List>
+                  {selectedProject?.users.map((user, index) => (
+                      <ListItem key={index}>
+                          <ListItemText primary={user} />
+                      </ListItem>
+                  ))}
+              </List>
+          </Dialog>
+
       </div>
     );
 }
