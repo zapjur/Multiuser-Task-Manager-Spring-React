@@ -34,11 +34,11 @@ function EditProjectForm() {
             <form onSubmit={handleSubmit} className="projectInfoContainer">
                 <div className="inputContainer">
                     <label>Title</label>
-                    <input name="title" type="text" className="form-control" defaultValue={selectedProject?.title}/>
+                    <input name="title" type="text" className="form-control" maxLength={36} defaultValue={selectedProject?.title}/>
                 </div>
                 <div className="inputContainer">
                     <label className="form-label">Description</label>
-                    <input name="description" type="text" className="form-control" defaultValue={selectedProject?.description}/>
+                    <input name="description" type="text" className="form-control" maxLength={76} defaultValue={selectedProject?.description}/>
                 </div>
                 <EditProjectButton type="submit"/>
             </form>

@@ -43,11 +43,11 @@ function NewProjectForm() {
             <form onSubmit={handleSubmit} className="projectInfoContainer">
                 <div className="inputContainer">
                     <label>Title</label>
-                    <input name="title" type="text" className="form-control"/>
+                    <input name="title" type="text" maxLength={36} className="form-control"/>
                 </div>
                 <div className="inputContainer">
                     <label className="form-label">Description</label>
-                    <input name="description" type="text" className="form-control"/>
+                    <input name="description" type="text" maxLength={76} className="form-control"/>
                 </div>
                 <CreateProjectButton type="submit"/>
             </form>
