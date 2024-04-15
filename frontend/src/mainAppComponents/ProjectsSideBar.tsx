@@ -21,17 +21,24 @@ function ProjectsSideBar() {
                 <SearchBar/>
             </div>
             <div className="projectsSection">
-                <div className="sectionFavorite">
-                    <h6 className="sectionTitle">Favorites</h6>
-                    <div className="horizontalLine"></div>
-                    <FavoritesList/>
+                <div style={{height: '30%', paddingBottom: '32px'}}>
+                    <div style={{height: '40px'}}>
+                        <h6 className="sectionTitle">Favorites</h6>
+                        <div className="horizontalLine"></div>
+                    </div>
+                    <div className="sectionFavorite">
+                        <FavoritesList/>
+                    </div>
                 </div>
-                <div className="sectionAllProjects">
-                    <h6 className="sectionTitle">All projects</h6>
-                    <div className="horizontalLine"></div>
-                    <ProjectList/>
+                <div style={{height: '70%', paddingBottom: '64px'}}>
+                    <div style={{height: '40px'}}>
+                        <h6 className="sectionTitle">All projects</h6>
+                        <div className="horizontalLine"></div>
+                    </div>
+                    <div className="sectionAllProjects">
+                        <ProjectList/>
+                    </div>
                 </div>
-
             </div>
             <div className="newProjectContainer">
                 <NewProjectButton/>
