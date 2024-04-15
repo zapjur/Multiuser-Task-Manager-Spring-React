@@ -13,7 +13,6 @@ interface Project {
 
 const SearchBar = () => {
 
-    const [inputValue, setInputValue] = useState('');
     const [value, setValue] = useState<Project | null>(null);
 
     const { projects, selectProject } = useProjectContext();
@@ -23,7 +22,6 @@ const SearchBar = () => {
         if (!project) return;
         selectProject(project.id);
         await fetchTasksForProject(project.id);
-        setInputValue('');
         setValue(null);
     };
 
