@@ -1,28 +1,65 @@
-import React, { useState } from 'react';
 import './mainAppStyles.css';
+import {Autocomplete, TextField} from "@mui/material";
+import React, {useState} from "react";
+import {useProjectContext} from "../context/ProjectContext";
+import {useTaskContext} from "../context/TaskContext";
+
+interface Project {
+    id: number;
+    title: string;
+    description: string;
+    users: string[];
+}
 
 const SearchBar = () => {
-    const [searchTerm, setSearchTerm] = useState('');
 
-    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchTerm(event.target.value);
-    };
+    const [inputValue, setInputValue] = useState('');
+    const [value, setValue] = useState<Project | null>(null);
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const { projects, selectProject } = useProjectContext();
+    const { fetchTasksForProject } = useTaskContext();
+
+    const handleProjectClick = async (project: Project | null) => {
+        if (!project) return;
+        selectProject(project.id);
+        await fetchTasksForProject(project.id);
+        setInputValue('');
+        setValue(null);
     };
 
     return (
         <div>
-            <form className="searchBar" onSubmit={handleSubmit}>
-                <input
-                    type="text"
-                    placeholder="Search projects"
-                    value={searchTerm}
-                    onChange={handleChange}
-                    className="searchInput"
-                />
-            </form>
+            <Autocomplete
+                disablePortal
+                id="combo-box-demo"
+                options={projects}
+                getOptionLabel={(option) => option.title}
+                value={value}
+                onChange={(event, newValue) => {
+                    handleProjectClick(newValue);
+                }}
+                sx={{
+                    '.MuiAutocomplete-inputRoot': {
+                        color: 'black',
+                        '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                            borderColor: '#cfe7fe',
+                        }
+                    },
+                    '.MuiOutlinedInput-root': {
+                        '& fieldset': {
+                            borderColor: 'grey',
+                            borderRadius: '16px',
+                        },
+                        '&:hover fieldset': {
+                            borderColor: '#cfe7fe',
+                        }
+                    },
+                    '.MuiInputLabel-outlined.Mui-focused': {
+                        color: 'grey'
+                    }
+                }}
+                renderInput={(params) => <TextField {...params} label="Search projects" />}
+            />
         </div>
     );
 };
