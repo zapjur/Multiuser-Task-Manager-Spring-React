@@ -1,7 +1,7 @@
 import './mainAppStyles.css';
 import logo from '../graphics/logo.png';
 import CalendarTodayRoundedIcon from '@mui/icons-material/CalendarTodayRounded';
-import logoutIcon from '../graphics/logout.png'
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import WindowOutlinedIcon from '@mui/icons-material/WindowOutlined';
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
@@ -68,7 +68,7 @@ function SideBar() {
                         },
                     }}
                 >
-                    <SettingsOutlinedIcon
+                    <AddCircleOutlineRoundedIcon
                         fontSize="large"
                         sx = {{
                             color: '#343a40',
@@ -84,15 +84,31 @@ function SideBar() {
                         },
                     }}
                 >
-                    <AddCircleOutlineRoundedIcon
+                    <SettingsOutlinedIcon
                         fontSize="large"
                         sx = {{
                             color: '#343a40',
                         }}
                     />
                 </IconButton>
-                <div className="containerHoverBackground logoutButton">
-                    <img src={logoutIcon} alt="Logout" onClick={logout}/>
+                <div className="logoutButton">
+                    <IconButton
+                        size="large"
+                        sx = {{
+                            color: 'black',
+                            '&:hover': {
+                                backgroundColor: '#0073e6',
+                            },
+                        }}
+                        onClick={logout}
+                    >
+                        <LogoutOutlinedIcon
+                            fontSize="large"
+                            sx = {{
+                                color: '#343a40',
+                            }}
+                        />
+                    </IconButton>
                 </div>
             </div>
         </div>
