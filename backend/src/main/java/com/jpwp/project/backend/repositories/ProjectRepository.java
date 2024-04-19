@@ -12,5 +12,7 @@ public interface ProjectRepository extends JpaRepository<Project, Long> {
     List<Project> findAllByOwner(User owner);
     List<Project> findByUsersContains(User user);
 
+    Optional<Project> findByInvitationCode(String invitationCode);
+    boolean existsByInvitationCode(String invitationCode);
 
 }

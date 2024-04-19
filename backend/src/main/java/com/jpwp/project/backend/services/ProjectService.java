@@ -7,14 +7,19 @@ import com.jpwp.project.backend.repositories.TaskRepository;
 import com.jpwp.project.backend.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.mapstruct.control.MappingControl;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import java.security.SecureRandom;
+import java.util.Locale;
+import java.util.Objects;
+import java.util.Random;
+
 
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -24,6 +29,22 @@ public class ProjectService {
     private final UserRepository userRepository;
     private final TaskRepository taskRepository;
     private final UserService userService;
+
+    private static final String UPPER = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    private static final String LOWER = UPPER.toLowerCase(Locale.ROOT);
+    private static final String DIGITS = "0123456789";
+    private static final String ALPHANUM = UPPER + LOWER + DIGITS;
+    private static final Random RANDOM = new SecureRandom();
+
+    public static String generateRandomCode(int length) {
+        if (length <= 0) throw new IllegalArgumentException("Length must be positive");
+
+        StringBuilder builder = new StringBuilder(length);
+        for (int i = 0; i < length; i++) {
+            builder.append(ALPHANUM.charAt(RANDOM.nextInt(ALPHANUM.length())));
+        }
+        return builder.toString();
+    }
 
     @Transactional
     public void addMemberToProject(Long projectId, String username) {
@@ -152,5 +173,35 @@ public class ProjectService {
         projectRepository.save(project);
 
         return project;
+    }
+
+    public String getOrGenerateInvitationCode(Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new EntityNotFoundException("Project not found"));
+
+        if (project.getInvitationCode() == null || project.getInvitationCode().isEmpty()) {
+            String newCode;
+            do {
+                newCode = generateRandomCode(8);
+            } while (projectRepository.existsByInvitationCode(newCode));
+
+            project.setInvitationCode(newCode);
+            projectRepository.save(project);
+        }
+
+        return project.getInvitationCode();
+    }
+
+    public void joinProject(String invitationCode) {
+        Project project = projectRepository.findByInvitationCode(invitationCode)
+                .orElseThrow(() -> new EntityNotFoundException("Project not found"));
+
+        User currentUser = userService.getCurrentUser();
+
+        project.getUsers().add(currentUser);
+        currentUser.getProjects().add(project);
+
+        projectRepository.save(project);
+        userRepository.save(currentUser);
     }
 }

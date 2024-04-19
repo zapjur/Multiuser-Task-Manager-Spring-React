@@ -118,5 +118,16 @@ public class ProjectController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping("/invitationCode/{code}")
+    public ResponseEntity<?> joinProject(@PathVariable String code) {
+        projectService.joinProject(code);
+        return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/invitationCode/{projectId}")
+    public ResponseEntity<String> getInvitationCode(@PathVariable Long projectId) {
+
+        return ResponseEntity.ok(projectService.getOrGenerateInvitationCode(projectId));
+    }
 
 }

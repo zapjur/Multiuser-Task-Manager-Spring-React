@@ -26,6 +26,8 @@ export const FormContext = createContext<{
     toggleEditProjectFormVisibility: () => void;
     isDeleteMemberFormVisible: boolean;
     toggleDeleteMemberFormVisibility: () => void;
+    isJoinProjectFormVisible: boolean;
+    toggleJoinProjectFormVisibility: () => void;
 } | undefined>(undefined);
 
 export const useFormContext = () => {
@@ -49,6 +51,7 @@ export const FormContextProvider: React.FC<FormContextProviderProps> = ({ childr
     const [editingTask, setEditingTask] = useState<Task | undefined>(undefined);
     const [isEditProjectFormVisible, setIsEditProjectFormVisible] = useState(false);
     const [isDeleteMemberFormVisible, setIsDeleteMemberFormVisible] = useState(false);
+    const [isJoinProjectFormVisible, setIsJoinProjectFormVisible] = useState(false);
 
     const toggleFormVisibility = () => setIsFormVisible(!isFormVisible);
     const toggleTaskFormVisibility = (status = '') => {
@@ -63,6 +66,8 @@ export const FormContextProvider: React.FC<FormContextProviderProps> = ({ childr
     const toggleEditProjectFormVisibility = () => setIsEditProjectFormVisible(!isEditProjectFormVisible);
 
     const toggleDeleteMemberFormVisibility = () => setIsDeleteMemberFormVisible(!isDeleteMemberFormVisible);
+
+    const toggleJoinProjectFormVisibility = () => setIsJoinProjectFormVisible(!isJoinProjectFormVisible);
 
 
     return (
@@ -82,6 +87,8 @@ export const FormContextProvider: React.FC<FormContextProviderProps> = ({ childr
             toggleEditProjectFormVisibility,
             isDeleteMemberFormVisible,
             toggleDeleteMemberFormVisibility,
+            isJoinProjectFormVisible,
+            toggleJoinProjectFormVisibility
         }}>
             {children}
         </FormContext.Provider>

@@ -8,10 +8,13 @@ import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRou
 import {useNavigate} from "react-router-dom";
 import axios from "axios";
 import IconButton from "@mui/material/IconButton";
+import {useFormContext} from "../context/FormContext";
 
 function SideBar() {
 
     const navigate = useNavigate();
+
+    const { toggleJoinProjectFormVisibility } = useFormContext();
 
     const logout = () => {
         navigate("/")
@@ -67,6 +70,7 @@ function SideBar() {
                             backgroundColor: '#0073e6',
                         },
                     }}
+                    onClick={toggleJoinProjectFormVisibility}
                 >
                     <AddCircleOutlineRoundedIcon
                         fontSize="large"

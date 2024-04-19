@@ -7,6 +7,7 @@ import MoreHorizIcon from '@mui/icons-material/MoreHoriz';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import VpnKeyRoundedIcon from '@mui/icons-material/VpnKeyRounded';
 import {Box, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle} from "@mui/material";
 import {useFormContext} from "../context/FormContext";
 import {useState} from "react";
@@ -20,6 +21,9 @@ function MoreOptionsButton() {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const [dialogOpen, setDialogOpen] = useState(false);
     const [onlyMemberDialogOpen, setOnlyMemberDialogOpen] = useState(false);
+    const [projectCode, setProjectCode] = useState<string | null>(null);
+    const [projectCodeDialogOpen, setProjectCodeDialogOpen] = useState(false);
+
 
     const project = projects.find(p => p.id === selectedProjectId) || null;
 
@@ -81,6 +85,25 @@ function MoreOptionsButton() {
         }
     }
 
+    const handleProjectCodeClick = async () => {
+        setAnchorEl(null);
+        try {
+            const response = await request('get', `/projects/invitationCode/${selectedProjectId}`);
+            if (response.status === 200) {
+                setProjectCode(response.data);
+                setProjectCodeDialogOpen(true);
+            } else {
+                console.error('Failed to fetch project code');
+            }
+        } catch (error) {
+            console.error('Error fetching project code: ', error);
+        }
+    };
+
+    const handleProjectCodeDialogClose = () => {
+        setProjectCodeDialogOpen(false);
+    };
+
     return (
         <div>
             <Button
@@ -114,6 +137,12 @@ function MoreOptionsButton() {
                     <EditIcon/>
                     <Box ml={1}>
                         Edit project
+                    </Box>
+                </MenuItem>
+                <MenuItem onClick={handleProjectCodeClick}>
+                    <VpnKeyRoundedIcon/>
+                    <Box ml={1}>
+                        Project code
                     </Box>
                 </MenuItem>
                 <MenuItem onClick={handleDeleteMemberClick}>
@@ -163,6 +192,21 @@ function MoreOptionsButton() {
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleOnlymemberDialogClose}>OK</Button>
+                </DialogActions>
+            </Dialog>
+            <Dialog
+                open={projectCodeDialogOpen}
+                onClose={handleProjectCodeDialogClose}
+                aria-labelledby="project-code-dialog-title"
+            >
+                <DialogTitle id="project-code-dialog-title">{"Project Code"}</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {projectCode}
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleProjectCodeDialogClose}>OK</Button>
                 </DialogActions>
             </Dialog>
         </div>

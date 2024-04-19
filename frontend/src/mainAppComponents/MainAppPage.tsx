@@ -11,6 +11,7 @@ import AddMemberForm from "./forms/AddMemberForm";
 import EditTaskForm from "./forms/EditTaskForm";
 import EditProjectForm from "./forms/EditProjectForm";
 import DeleteMemberForm from "./forms/DeleteMemberForm";
+import JoinProjectForm from "./forms/JoinProjectForm";
 
 function MainAppPage() {
 
@@ -20,6 +21,7 @@ function MainAppPage() {
         isEditTaskFormVisible,
         isEditProjectFormVisible,
         isDeleteMemberFormVisible,
+        isJoinProjectFormVisible,
     } = useFormContext();
     const { selectedProjectId } = useProjectContext();
 
@@ -48,6 +50,7 @@ function MainAppPage() {
                 {isEditTaskFormVisible && <EditTaskForm />}
                 {isEditProjectFormVisible && <EditProjectForm />}
                 {isDeleteMemberFormVisible && <DeleteMemberForm />}
+                {isJoinProjectFormVisible && <JoinProjectForm />}
             </div>
         </div>
 );
