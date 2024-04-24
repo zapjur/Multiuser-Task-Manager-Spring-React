@@ -50,3 +50,4 @@ src/main/resources/application-local.properties
 webpack-assets.json
 /backend/.idea/
 .idea/
+frontend/node_modules/.cache/
