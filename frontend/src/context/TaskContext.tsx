@@ -1,6 +1,5 @@
 import React, { createContext, ReactNode, useContext, useState } from 'react';
 import { request } from "../axios_helper";
-import task from "../mainAppComponents/tasks/Task";
 
 interface TaskProviderProps {
     children: ReactNode;
@@ -103,8 +102,6 @@ export const TaskProvider: React.FC<TaskProviderProps> = ({ children }) => {
             return newTasks;
         });
     };
-
-
 
 
     return (
