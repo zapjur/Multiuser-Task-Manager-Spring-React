@@ -52,5 +52,4 @@ function MainAppPage() {
         </div>
 );
 }
-
 export default MainAppPage;

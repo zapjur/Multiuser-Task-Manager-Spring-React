@@ -19,6 +19,12 @@ function SideBar() {
         delete axios.defaults.headers.common['Authorization'];
 
     };
+    const goToApp = () => {
+        navigate("/app")
+    }
+    const goToCalendar = () => {
+        navigate("/calendar")
+    }
 
     return (
         <div className="borderRightSide containerSideBar">
@@ -35,6 +41,7 @@ function SideBar() {
                             backgroundColor: '#0073e6',
                         },
                     }}
+                    onClick={goToApp}
                 >
                     <WindowOutlinedIcon
                         fontSize="large"
@@ -51,6 +58,7 @@ function SideBar() {
                             backgroundColor: '#0073e6',
                         },
                     }}
+                    onClick={goToCalendar}
                 >
                     <CalendarTodayRoundedIcon
                         fontSize="large"

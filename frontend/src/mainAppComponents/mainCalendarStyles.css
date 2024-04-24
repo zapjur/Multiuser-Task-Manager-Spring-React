@@ -1,0 +1,131 @@
+h4{
+    margin-bottom: 15px;
+}
+
+.containerSideBar {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 2vh;
+}
+.mainPanel {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.mainAppContainer {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    width: 100%;
+    align-items: flex-start;
+    background-color: #f8f9fa;
+}
+.startPanel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+}
+.calendarHeader {
+    display: flex;
+    gap: 8px;
+}
+.calendarHeaderItem {
+    flex: 2;
+    border: 3px solid #222222;
+    padding: 10px;
+    border-radius: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+.calendarBody {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 10px;
+    padding-top: 16px;
+    text-align: center;
+
+}
+.calendarBodyItem{
+    border: 1px solid #ccc;
+    padding: 10px;
+    min-height: 9vh;
+    border-radius: 20px;
+}
+.monthName{
+    font-size: 3.5rem;
+    font-weight: bold;
+    padding-bottom: 5px;
+    margin-right: 10px;
+}
+.topCalendar{
+    display: flex;
+    align-items: center;
+}
+
+.calendarButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-left: auto;
+}
+.taskListItems {
+    flex-direction: column;
+    margin-top: 10px;
+}
+.EventTitleDone{
+    color: white;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+    align-items: center;
+    -moz-background-size: auto;
+    background-color: rgb(87, 204, 153);
+    font-size: 1.5rem;
+    border-radius: 20px;
+    padding-bottom: 6px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.EventTitleToDo{
+
+    color: white;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+    align-items: center;
+    -moz-background-size: auto;
+    background-color: rgb(249, 65, 68);
+    font-size: 1.5rem;
+    border-radius: 20px;
+    padding-bottom: 6px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+.EventTitleDoing{
+    color: white;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+    align-items: center;
+    -moz-background-size: auto;
+    background-color: rgb(248, 150, 30);
+    font-size: 1.5rem;
+    border-radius: 20px;
+    padding-bottom: 6px;
+    padding-left: 5px;
+    padding-right: 5px;
+
+}
+.EventTitleInReview{
+    color: white;
+    text-shadow: 2px 2px 2px rgba(0, 0, 0, 1);
+    align-items: center;
+    -moz-background-size: auto;
+    background-color: rgb(249, 199, 79);
+    font-size: 1.5rem;
+    border-radius: 20px;
+    padding-bottom: 6px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+

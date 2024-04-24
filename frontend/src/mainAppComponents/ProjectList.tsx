@@ -29,7 +29,6 @@ const ProjectList = () => {
                 console.error('Wystąpił błąd podczas pobierania projektów:', error);
             }
         };
-
         fetchProjects();
     }, [setProjects]);
 

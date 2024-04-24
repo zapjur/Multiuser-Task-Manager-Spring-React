@@ -7,6 +7,7 @@ import LoginPage from "./pages/LoginPage";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import NotFoundPage from "./pages/NotFoundPage";
 import App from "./pages/App";
+import Calendar from "./pages/Calendar";
 
 const router = createBrowserRouter([
     {
@@ -16,6 +17,16 @@ const router = createBrowserRouter([
     },
     {
         path: '/app',
+        element: <App/>,
+        errorElement: <NotFoundPage/>,
+    },
+    {
+        path: '/calendar',
+        element: <Calendar/>,
+        errorElement: <NotFoundPage/>,
+    },
+    {
+        path: '/settings',
         element: <App/>,
         errorElement: <NotFoundPage/>,
     }

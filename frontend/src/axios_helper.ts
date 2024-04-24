@@ -12,12 +12,14 @@ export const setAuthToken = (token: string): void => {
     axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
+
 export const request = (method: "get" | "post" | "put" | "delete", url: string, data?: object) => {
     let headers: { Authorization?: string } = {};
     const authToken = getAuthToken();
     if(authToken) {
         headers['Authorization'] = `Bearer ${authToken}`;
     }
+
 
     return axios({
         method: method,
