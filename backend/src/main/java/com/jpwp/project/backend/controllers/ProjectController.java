@@ -51,6 +51,7 @@ public class ProjectController {
         return new ResponseEntity<>(favoritesDtos, HttpStatus.OK);
     }
 
+
     @PostMapping
     public ResponseEntity<ProjectDto> createProject(@RequestBody ProjectDto projectDto) {
         User currentUser = userService.getCurrentUser();

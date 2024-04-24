@@ -4,12 +4,13 @@ import com.jpwp.project.backend.dto.TaskDto;
 import com.jpwp.project.backend.entities.Task;
 import com.jpwp.project.backend.repositories.ProjectRepository;
 import com.jpwp.project.backend.services.TaskService;
+import com.jpwp.project.backend.services.UserService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import com.jpwp.project.backend.entities.User;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -21,6 +22,7 @@ public class TaskController {
 
     private final TaskService taskService;
     private final ProjectRepository projectRepository;
+    private final UserService userService;
 
     @PostMapping
     public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDto) {
@@ -34,6 +36,16 @@ public class TaskController {
         List<TaskDto> taskDtos = tasks.stream()
                 .map(TaskDto::new)
                 .collect(Collectors.toList());
+        return ResponseEntity.ok(taskDtos);
+    }
+    @GetMapping
+    public ResponseEntity<List<TaskDto>> getTasksForCurrentUser() {
+        User user = userService.getCurrentUser();
+        List<Task> tasks = user.getTasks();
+        List<TaskDto> taskDtos = tasks.stream()
+                .map(TaskDto::new)
+                .collect(Collectors.toList());
+
         return ResponseEntity.ok(taskDtos);
     }
 
